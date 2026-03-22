@@ -1,0 +1,124 @@
+/*criador Miguel Silva*/
+
+.containerGrande{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  margin-top: 5%;
+  margin-bottom: 5%;
+
+}
+
+
+.container {
+    text-align: center;
+    padding: 40px;
+    border-radius: 10px;
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.5);
+    width: 100%;
+    max-width: 400px; /* Para garantir que a largura seja adequada em dispositivos maiores */
+    color:black;
+    background-color: var(--color-primary-2);
+}
+
+.img{
+    width: 150px;
+    height: 150px;
+    margin-bottom: 20px;
+    border-radius: 50%; /* Torna a imagem redonda */
+}
+
+.container img {
+    width: 150px;
+    margin-bottom: 20px;
+    border-radius: 50%; /* Torna a imagem redonda */
+}
+
+.container h1 {
+    margin-bottom: 20px;
+    font-size: 1.8em;
+}
+
+.input-group {
+    margin: 15px 0;
+    text-align: left;
+}
+
+.input-group label {
+    display: block;
+    margin-bottom: 8px;
+}
+
+.input-group input {
+    width: 100%;
+    padding: 10px;
+    border: none;
+    border-radius: 5px;
+    background-color:var(--color-primary-1);
+    color: var(--color-neutral-1);
+}
+
+.input-group input:focus {
+    outline: none;
+    border: 1px solid #555;
+}
+
+.btn {
+    display: inline-block;
+    background-color:var(--color-primary-1);
+    color: var(--color-neutral-1);
+    padding: 12px;
+    margin: 20px 0;
+    width: 100%;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 1em;
+}
+
+.btn:hover {
+    background-color: #ccc;
+}
+
+.social-btn {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    margin: 20px 0;
+}
+
+.social-btn button {
+    flex: 1;
+    background-color: #333;
+    color: white;
+    padding: 10px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 1em;
+}
+
+.social-btn button img {
+    width: 20px;
+    margin-right: 10px;
+}
+
+.social-btn button.google {
+    background-color: white;
+    color: black;
+}
+
+.social-btn button.facebook {
+    background-color: #4267B2;
+    color: white;
+}
+
+.link {
+    color: #007bff;
+    text-decoration: none;
+}
+
+.link:hover {
+    text-decoration: underline;
+}
