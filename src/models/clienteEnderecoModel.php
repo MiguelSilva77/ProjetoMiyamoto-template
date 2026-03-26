@@ -4,9 +4,9 @@ criado por Miguel Silva, class ClienteEnderecoModel, responsável por fazer as o
 dados referente a tabela ClienteEnderecoModel
 
 */
-require_once '../conection/conexao.php';
-require_once '../models/clienteModel.php';
-require_once '../models/enderecoModel.php';
+require_once __DIR__.'/../conection/conexao.php';
+require_once __DIR__.'/../models/clienteModel.php';
+require_once __DIR__.'/../models/enderecoModel.php';
 
 class ClienteEnderecoModel{
     private $id_cliente;

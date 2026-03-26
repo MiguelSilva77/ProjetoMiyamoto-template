@@ -4,8 +4,8 @@ criado por Miguel Silva, class ClienteModel, responsável por fazer as operaçõ
 referente a tabela clientes
 
 */
-require_once '../conection/conexao.php';
-require_once '../models/enderecoModel.php';
+require_once __DIR__.'/../conection/conexao.php';
+require_once __DIR__.'/../models/enderecoModel.php';
 
     class ClienteModel{
         
@@ -112,15 +112,58 @@ require_once '../models/enderecoModel.php';
                     $clientes[] = $cliente;
                 };
                 return $clientes;
-                //return $stmt->fetchAll(PDO::FETCH_CLASS | PDO::FETCH_PROPS_LATE, self::class);
             }
 
-            public function __toString(){
-            return "ID: {$this->id_cliente}, Nome: {$this->nome}, Email: {$this->email}, Telefone: {$this->telefone}, CPF: {$this->cpf}";
-}
+            public static function verClientePorId($id){
+                $pdo = Conexao::conecta();
+                $sql = "SELECT * FROM CLIENTETESTE WHERE id_cliente = $id";
+                $stmt = $pdo->query($sql);
+                 while($row = $stmt->fetch(PDO::FETCH_ASSOC)){
+                    $cliente = new ClienteModel();
+
+                    $cliente->setId($row['id_cliente']);
+                    $cliente->setNome($row['nome']);
+                    $cliente->setEmail($row['email']);
+                    $cliente->setTelefone($row['telefone']);
+                    $cliente->setCpf($row['cpf']);
+                    $cliente->setSenha($row['senha']);
+                       
+                    $clientes = $cliente;
+                };
+                return $clientes;
+            }
+
+           
+
+            public function editarCliente($cliente){
+                $pdo = Conexao::conecta();
+
+                $sql = "UPDATE CLIENTETESTE set
+                        nome = $cliente->nome,
+                        email = $cliente->email,
+                        telefone - $cliente->cpf
+                        WHERE id_cliente = $cliente->id_cliente";
+
+                $stmt = $pdo->prepare($sql);
+                $stmt->execute();
+
+                return $cliente->id_cliente;
+
+            }
+
+            public static function clienteJSON($cliente){
+                $clienteJSON = json_encode($cliente);
+                return $clienteJSON;
+            }
 
             
+            
+             public function __toString(){
+                return "ID: {$this->id_cliente}, Nome: {$this->nome}, Email: {$this->email}, Telefone: {$this->telefone}, CPF: {$this->cpf}";
+            }
 
     }
+
+    
 
 ?>

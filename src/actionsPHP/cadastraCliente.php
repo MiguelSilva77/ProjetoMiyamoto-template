@@ -17,10 +17,6 @@ $bairro = $_POST['bairro'];
 $cidade = $_POST['cidade'];
 $estado = $_POST['estado'];
 
-echo "nome $nome <br> email $email <br> telefone $telefone <br> cpf $cpf <br> senha $senha <br>
-cep $cep <br> rua $rua <br> numero $numero <br> complemento $complemento <br> bairro $bairro <br>
-cidade $cidade <br> estado $estado <br><br>";
-
 $pdo = Conexao::conecta();
 
 try{
@@ -61,17 +57,42 @@ try{
     $pdo->rollBack();
 }
 
-echo"<br> <b>All clients Registered </b><br>";
-$todosOsCliente = ClienteModel::verTodosOsClientes();
-foreach($todosOsCliente as $cliente){
-    echo $cliente. "<br>";
-}
-
-echo"<br> <b>All address Registered </b><br>";
-$todosOsEnderecos = EnderecoModel::buscarTodosOsEnderecos();
-foreach($todosOsEnderecos as $endereco){
-    echo $endereco. "<br>";
-}
-
-
 ?>
+
+<dialog>
+    <h1>Dados Salvos com sucesso</h1>
+    <a href="../index.php">
+        <button>Sair</button>
+    </a>
+</dialog>
+
+<style>dialog {
+    border: none;
+    border-radius: 15px;
+    padding: 30px;
+    width: 300px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+}
+
+dialog::backdrop {
+    background: rgba(0, 0, 0, 0.6);
+    backdrop-filter: blur(3px); 
+}
+
+dialog button {
+    background-color: #28a745;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-top: 15px;
+}</style>
+
+<Script>
+    const mensagem = document.querySelector("dialog");
+    mensagem.showModal();
+</Script>
+
+
+

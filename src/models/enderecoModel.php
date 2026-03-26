@@ -5,8 +5,8 @@ criado por Miguel Silva, class EnderecoModel, responsável por fazer as operaç�
 referente a tabela Endereco
 
 */
-require_once '../conection/conexao.php';
-require_once '../models/clienteModel.php';
+require_once __DIR__.'/../conection/conexao.php';
+require_once __DIR__.'/../models/clienteModel.php';
 
 
 class EnderecoModel{
