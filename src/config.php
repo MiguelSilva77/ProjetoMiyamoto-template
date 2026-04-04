@@ -26,11 +26,16 @@
     $todosOsCliente = ClienteModel::verTodosOsClientes();
         foreach($todosOsCliente as $cliente){
             $idVar = $cliente->getId();
-            echo $cliente.
-        '<button onClick="editarCliente(' . $idVar . ')">editar</button><br>
-        ';
+            $clienteJSON = $cliente->clienteJSON($cliente);
+            echo $cliente.'
+            <form  method="POST" action="actionsPHP/editaCliente.php">
+                <input type="hidden" name="dados" value="'.htmlspecialchars($idVar).'"></input>
+                <button type="submit">editar</button>
+            </form>';
+        
+        //    '<button onClick="editarCliente(' . $idVar . ')">editar</button><br>
+        //';
     }
-
     echo"<br> <b>All address Registered </b><br>";  
     $todosOsEnderecos = EnderecoModel::buscarTodosOsEnderecos();
     foreach($todosOsEnderecos as $endereco){
@@ -82,3 +87,8 @@
 </html>
 
 
+
+
+<form action="edita.php">
+    <button type="submit">ediatr</button>
+</form>

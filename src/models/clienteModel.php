@@ -17,7 +17,8 @@ require_once __DIR__.'/../models/enderecoModel.php';
         private $senha;
         private $enderecos = [];
 
-        public function __construct($nome = null, $email = null, $telefone = null, $cpf = null, $senha = null){
+        public function __construct($id_cliente = null,$nome = null, $email = null, $telefone = null, $cpf = null, $senha = null){
+            $this->id_cliente = $id_cliente;
             $this->nome = $nome;
             $this->email = $email;
             $this->telefone = $telefone;
@@ -25,6 +26,8 @@ require_once __DIR__.'/../models/enderecoModel.php';
             $this->senha = $senha;
             
         }
+
+        
     
     public function getId(){ 
         return $this->id_cliente; 
@@ -139,12 +142,18 @@ require_once __DIR__.'/../models/enderecoModel.php';
                 $pdo = Conexao::conecta();
 
                 $sql = "UPDATE CLIENTETESTE set
-                        nome = $cliente->nome,
-                        email = $cliente->email,
-                        telefone - $cliente->cpf
-                        WHERE id_cliente = $cliente->id_cliente";
+                        nome = :nome,
+                        email = :email,
+                        telefone = :cpf
+                        WHERE id_cliente = :id";
 
                 $stmt = $pdo->prepare($sql);
+
+                $stmt->bindValue(':nome',$cliente->getNome());
+                $stmt->bindValue(':email',$cliente->getEmail());
+                $stmt->bindValue(':cpf',$cliente->getCpf());
+                $stmt->bindValue(':id',$cliente->getId());
+
                 $stmt->execute();
 
                 return $cliente->id_cliente;
