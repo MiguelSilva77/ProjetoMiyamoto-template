@@ -1,3 +1,7 @@
+<?php
+session_start();
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -20,6 +24,8 @@
     require_once  __DIR__.'/models/clienteEnderecoModel.php';
     require_once  __DIR__.'/models/clienteModel.php';
     require_once  __DIR__.'/models/enderecoModel.php';
+
+    $nome = $_SESSION['nome'];
 
 
     echo"<br> <b>All clients Registered </b><br>";
@@ -51,6 +57,8 @@
 
     $unicoCliente = ClienteModel::verClientePorId(1);
     echo "<br> <b>cliente unico </b>". $unicoCliente;
+
+    echo"<br> $nome";
 
     ?>
 </div>
@@ -87,8 +95,3 @@
 </html>
 
 
-
-
-<form action="edita.php">
-    <button type="submit">ediatr</button>
-</form>

@@ -18,11 +18,14 @@ $cidade = $_POST['cidade'];
 $estado = $_POST['estado'];
 
 $pdo = Conexao::conecta();
+$clienteCadastrado = 0;
+$mensagemDeErro = '';
 
 try{
     $pdo->beginTransaction();
+    
 
-    $cliente = new ClienteModel($nome, $email, $telefone, $cpf, $senha);
+    $cliente = new ClienteModel($id_cliente = null, $nome, $email, $telefone, $cpf, $senha);
     $id_cliente =  $cliente->inserirCliente()->getId();
 
     $endereco = new EnderecoModel($cep, $rua, $numero, $complemento, $bairro, $cidade, $estado);
@@ -35,36 +38,60 @@ try{
         throw new PDOException("Error Processing Request", 1);
     }
 
+    
     $pdo->commit();
+    $clienteCadastrado = 1;
 }catch (PDOException $e){
     if($e->errorInfo[1] == 1062){
         if(str_contains($e->getMessage(), 'email')){
-            echo "Este email já está cadastrado no nosso banco de dados, <a href='../login.php'> tente logar aqui</a>";
+            $mensagemDeErro = "Este email já está cadastrado no nosso banco de dados, <a href='../login.php'> tente logar aqui</a>";
             $pdo->rollBack();
+            $clienteCadastrado = 2;
         }else if(str_contains($e->getMessage(),'cpf')){
-            echo "Este cpf já está cadastrado no nosso banco de dados, <a href='../login.php'> tente logar aqui</a>";
+            $mensagemDeErro = "Este cpf já está cadastrado no nosso banco de dados, <a href='../login.php'> tente logar aqui</a>";
             $pdo->rollBack();
+            $clienteCadastrado = 2;
         }else{
-            echo "Erro duplicados";
+            $mensagemDeErro = "Erro dados duplicados";
             $pdo->rollBack();
+            $clienteCadastrado = 2;
         }
     }else{
-        echo "erro inespérado: ".$e->getMessage();
+        $mensagemDeErro = "erro inesperado: ".$e->getMessage();
         $pdo->rollBack();
+        $clienteCadastrado = 2;
     }
 }catch (RuntimeException $e){
-    echo "Ocorreu um erro: ".$e->getMessage();
+    $mensagemDeErro = "Ocorreu um erro: ".$e->getMessage();
     $pdo->rollBack();
+    $clienteCadastrado = 2;
 }
+
+if($clienteCadastrado == 1){
+    echo'
+    <dialog>
+        <h1>Dados Salvos com sucesso</h1>
+        <a href="../index.php">
+            <button>Sair</button>
+        </a>
+    </dialog>
+    
+    ';
+}else if ($clienteCadastrado == 2){
+    echo'<dialog>
+            <h1>Algo deu Errado :( </h1>
+            <h3>'.$mensagemDeErro.'</h3>
+            <a href="../index.php">
+                <button>Sair</button>
+            </a>
+                <button onClick="window.history.back()">Voltar</button>
+        </dialog>';
+}
+
 
 ?>
 
-<dialog>
-    <h1>Dados Salvos com sucesso</h1>
-    <a href="../index.php">
-        <button>Sair</button>
-    </a>
-</dialog>
+
 
 <style>dialog {
     border: none;

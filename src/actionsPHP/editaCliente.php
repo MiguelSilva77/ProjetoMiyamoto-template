@@ -6,17 +6,18 @@
 
     
     $pdo = Conexao::conecta();
-    $nomeAlterado = $_POST['nome'];
+    @$nomeAlterado = $_POST['nome'];
+    $alteracaoRealizada = 0;
+    $mensagemDeErro = ' ';
 
     if($nomeAlterado == null){
         $dados = $_POST['dados'];
-        echo $_POST['dados'];
         $cliente = ClienteModel::verClientePorId($dados);
 
-        echo '
+        echo '<h1>Altere os dados que deseja atualizar</h1>
         <form action="" method="POST">
-            <input type="text" name="id" id="id" value="'.$cliente->getId().'" >
-            <input type="text" name="senha" id="senha" value="'.$cliente->getSenha().'" >
+            <input style="display: none;" type="text" name="id" id="id" value="'.$cliente->getId().'" >
+            <input style="display: none;" type="text" name="senha" id="senha" value="'.$cliente->getSenha().'" >
 
 
             <label for="nome">Nome:</label>
@@ -52,16 +53,54 @@
        
 
             $pdo->commit();
+            $alteracaoRealizada = 1;
        
+        }catch (PDOException $e){
+            if($e->errorInfo[1] == 1062){
+                if(str_contains($e->getMessage(), 'email')){
+                    echo "Este email já está cadastrado no nosso banco de dados, <a href='../login.php'> tente logar aqui</a>";
+                    $alteracaoRealizada = 2;
+                    $mensagemDeErro = "Este email já está cadastrado no nosso banco de dados";
+                    $pdo->rollBack();
+                }else if(str_contains($e->getMessage(),'cpf')){
+                    $mensagemDeErro = "Este cpf já está cadastrado no nosso banco de dados, <a href='../login.php'> tente logar aqui</a>";
+                    $pdo->rollBack();
+                }else{
+                    $mensagemDeErro = "Erro dados duplicados";
+                    $pdo->rollBack();
+                }
+            }else{
+                $mensagemDeErro = "erro inespérado: ".$e->getMessage();
+                $pdo->rollBack();
+            }
         }catch (RuntimeException $e){
-            echo$e->getMessage();
+            $mensagemDeErro = "Ocorreu um erro: ".$e->getMessage();
             $pdo->rollBack();
         }
 
     }
 
     
-   
+   if($alteracaoRealizada == 1){
+    //alterar posteriormente, ao clicar em sair a página deve ser redirecioanada para página do cliente;
+        echo'<dialog>
+            <h1>Dados Atualizados com sucesso</h1>
+            <a href="../index.php">
+                <button>Sair</button>
+            </a>
+                
+           
+        </dialog>';
+   }else if($alteracaoRealizada == 2){
+        echo'<dialog>
+            <h1>Algo deu Errado :( </h1>
+            <h3>'.$mensagemDeErro.'</h3>
+            <a href="../index.php">
+                <button>Sair</button>
+            </a>
+                <button onClick="window.history.back()">Voltar</button>
+        </dialog>';
+   }
         
 
        
@@ -71,7 +110,32 @@
     
 ?>
 
+<!-- colocar esse script e style em página separada depois -->
+<style>dialog {
+    border: none;
+    border-radius: 15px;
+    padding: 30px;
+    width: 300px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+}
 
-<h1>olá</h1>
+dialog::backdrop {
+    background: rgba(0, 0, 0, 0.6);
+    backdrop-filter: blur(3px); 
+}
+
+dialog button {
+    background-color: #28a745;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-top: 15px;
+}</style>
 
 
+<Script>
+    const mensagem = document.querySelector("dialog");
+    mensagem.showModal();
+</Script>

@@ -1,3 +1,27 @@
+<?php
+session_start();
+require_once 'models/funcionarioModel.php';
+
+$email = null;
+$senha = null;
+
+if(isset($_POST['email'])&&isset($_POST['senha'])){
+    $email = $_POST['email'];
+    $senha = $_POST['senha'];
+
+    $funcionario = funcionarioModel::logaFuncionario($email, $senha);
+
+    if($funcionario){
+        $_SESSION['nome'] = $funcionario['nome'];
+        $_SESSION['id'] = $funcionario['id_funcionario'];
+        header("location: config.php");
+    }
+}
+
+
+?>
+
+
 <!-- Criador Miguel Silva -->
 
 <!DOCTYPE html>
@@ -79,7 +103,7 @@
         <label class="loginColaboradores">Login para colaboradores</label>
         <img src="images/logo.png" class="img" >
 
-        <form action="actionsPHP/logaFuncionario.php" method="post">
+        <form action="" method="post">
             <div class="input-group">
                 <label for="nome">Informe o seu nome</label>
                 <input type="text" id="nome" name="nome" placeholder="Informe o seu nome">
@@ -94,7 +118,6 @@
             <input type="password" id="senha" name="senha" placeholder="Informe a sua senha">
         </div>
 
-        <a href="config.php">teste</a>
         <input type="submit" name="continuar" id="continuar" class="btn" value="Continuar">
         </form>
         </div>

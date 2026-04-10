@@ -141,10 +141,11 @@ require_once __DIR__.'/../models/enderecoModel.php';
             public function editarCliente($cliente){
                 $pdo = Conexao::conecta();
 
-                $sql = "UPDATE CLIENTETESTE set
+                 $sql = "UPDATE CLIENTETESTE set
                         nome = :nome,
                         email = :email,
-                        telefone = :cpf
+                        telefone = :telefone,
+                        cpf = :cpf
                         WHERE id_cliente = :id";
 
                 $stmt = $pdo->prepare($sql);
@@ -152,12 +153,24 @@ require_once __DIR__.'/../models/enderecoModel.php';
                 $stmt->bindValue(':nome',$cliente->getNome());
                 $stmt->bindValue(':email',$cliente->getEmail());
                 $stmt->bindValue(':cpf',$cliente->getCpf());
+                $stmt->bindValue(':telefone',$cliente->getTelefone());
                 $stmt->bindValue(':id',$cliente->getId());
 
                 $stmt->execute();
 
                 return $cliente->id_cliente;
+            }
 
+            public static function logaCliente($email, $senha){
+                $pdo = Conexao::conecta();
+                $sql = "SELECT * FROM CLIENTETESTE WHERE email = '$email' AND senha = '$senha'";
+                $stmt = $pdo->query($sql);
+                $quantidade = $stmt->rowCount();
+                if($quantidade == 1){
+                    return $stmt->fetch(PDO::FETCH_ASSOC);
+                }else{
+                    return'dados incorretos';
+                }
             }
 
             public static function clienteJSON($cliente){

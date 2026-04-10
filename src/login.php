@@ -1,4 +1,41 @@
-<!-- Criador Miguel Silva -->
+<?php 
+session_start();
+require_once 'models/clienteModel.php';
+
+$login = null;
+$senha = null;
+
+    if(isset($_POST['email'])&& isset ($_POST['senha'])){
+    
+        $email = $_POST['email'];
+        $senha = $_POST['senha'];
+
+        $cliente = ClienteModel::logaCliente($email, $senha);
+        
+        if($cliente){
+            $_SESSION['nome'] = $cliente['nome'];
+            $_SESSION['id_cliente'] = $cliente['id_cliente'];
+            header("Location: paginaUsuario.php");
+        }else{
+            echo'cliente não encontrado';
+        }
+           
+            
+      
+
+        
+    }
+
+
+    
+
+
+
+?>
+
+
+
+
 
 <!DOCTYPE html>
 <html lang="en">
@@ -77,7 +114,7 @@
      <div class="container">
         <img src="images/logo.png" class="img" >
 
-        <form action="actionsPHP/logaCliente.php" method="post">
+        <form action="" method="post">
              <div class="input-group">
             <label for="email">Informe o seu e-mail</label>
             <input type="email" id="email" name="email" placeholder="Informe o seu e-mail">
