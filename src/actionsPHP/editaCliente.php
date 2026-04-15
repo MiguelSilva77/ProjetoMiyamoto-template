@@ -85,7 +85,7 @@
     //alterar posteriormente, ao clicar em sair a página deve ser redirecioanada para página do cliente;
         echo'<dialog>
             <h1>Dados Atualizados com sucesso</h1>
-            <a href="../index.php">
+            <a href="../paginaUsuario.php">
                 <button>Sair</button>
             </a>
                 
@@ -95,7 +95,7 @@
         echo'<dialog>
             <h1>Algo deu Errado :( </h1>
             <h3>'.$mensagemDeErro.'</h3>
-            <a href="../index.php">
+            <a href="../paginaUsuario.php">
                 <button>Sair</button>
             </a>
                 <button onClick="window.history.back()">Voltar</button>
