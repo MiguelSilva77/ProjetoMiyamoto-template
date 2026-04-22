@@ -29,7 +29,20 @@ class ClienteEnderecoModel{
         return $pdo->lastInsertId();
     }
 
+       public static function buscarEnderecoPorIdDoCliente($idCliente){
+        $pdo = Conexao::conecta();
+
+        $sql = "SELECT id_endereco FROM CLIENTE_ENDERECO_TESTE WHERE id_cliente = :id";
+        $stmt = $pdo->prepare($sql);
+
+        $stmt->bindValue(':id', $idCliente, PDO::PARAM_INT);
+
+        $stmt->execute();
+
+        return $stmt->fetchAll(PDO::FETCH_COLUMN);
+    }
+
 }
 
-
+ 
 ?>

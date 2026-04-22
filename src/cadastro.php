@@ -107,7 +107,7 @@
                      Não sei meu cep
                     </a>
             </div>
-            <input type="text" id="cep" name="cep" maxlength="8" placeholder="99999-999" required>
+            <input type="text" id="cep" name="cep" maxlength="9" placeholder="99999-999" required>
            
 
             <label for="rua">Rua:</label>

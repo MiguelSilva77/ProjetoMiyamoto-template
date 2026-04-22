@@ -135,7 +135,7 @@ class EnderecoModel{
         return $enderecos;
     }
 
-    public function procurarEnderecoPorId($id){
+    public static function procurarEnderecoPorId($id){
          $pdo = Conexao::conecta();
          $sql = "SELECT * FROM ENDERECOTESTE WHERE id_endereco = $id";
          $stmt = $pdo->query($sql);
@@ -154,6 +154,35 @@ class EnderecoModel{
             $enderecos = $endereco;
             return $enderecos;
          }
+    }
+
+    public function editaEndereco($endereco){
+        $pdo = Conexao::conecta();
+        $sql = "UPDATE ENDERECOTESTE set
+                cep = :cep,
+                rua = :rua,
+                numero = :numero,
+                complemento = :complemento,
+                bairro = :bairro,
+                cidade = :cidade,
+                estado = :estado
+                WHERE id_endereco = :id
+                ";
+
+        $stmt = $pdo->prepare($sql);
+
+        $stmt->bindValue(':cep',$endereco->getCep());
+        $stmt->bindValue(':rua',$endereco->getRua());
+        $stmt->bindValue(':numero',$endereco->getNumero());
+        $stmt->bindValue(':complemento',$endereco->getComplemento());
+        $stmt->bindValue(':bairro',$endereco->getBairro());
+        $stmt->bindValue(':cidade',$endereco->getCidade());
+        $stmt->bindValue(':estado',$endereco->getEstado());
+        $stmt->bindValue(':id',$endereco->getId());
+
+        $stmt->execute();
+
+        return $endereco->getId();
     }
 
     public function __toString(){

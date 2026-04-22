@@ -3,22 +3,21 @@
 verifica se a label já foi digitada -> verifica se o cep é valido -> preenche os campos caso o cep seja válido*/
 
 let cepLabel = document.getElementById('cep');
-
-
 cepLabel.addEventListener('input',function(){
         let cep = document.getElementById('cep').value;
-        if(cep.length == 8){
+        if(cep.length == 8 || cep.length == 9){
                 cepValido(cep);
         }
 })
 
 function cepValido(cep){
         cep = cep.replace(/\D/g, '');
-        if(cep.length !== 8){
-                alert("CEP invalido, a quantidade de caracteres deve ser 8");
-                limpaForm();
-                return;
-        }
+        //excluir depois, versão antiga que estava bugando
+        //if(cep.length !== 8){
+          //      alert("CEP invalido, a quantidade de caracteres deve ser 8");
+            //    limpaForm();
+              //  return;
+        //}
         
        fetch("https://viacep.com.br/ws/"+cep+"/json/")
        .then(response => response.json())
@@ -32,6 +31,7 @@ function cepValido(cep){
         }
 
 })
+}
 
 
 function buscaEndereco(cep){
@@ -45,7 +45,7 @@ function buscaEndereco(cep){
                 document.getElementById('estado').value = data.uf;
         })
 }
-}
+
        
 function limpaForm(){
         document.getElementById('cep').value = '';

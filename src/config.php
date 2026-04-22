@@ -24,42 +24,64 @@ session_start();
     require_once  __DIR__.'/models/clienteEnderecoModel.php';
     require_once  __DIR__.'/models/clienteModel.php';
     require_once  __DIR__.'/models/enderecoModel.php';
+    require_once  __DIR__.'/models/funcionarioModel.php';
+
 
     $nome = $_SESSION['nome'];
+    echo"<h2>Olá $nome</h2>";
 
 
     echo"<br> <b>All clients Registered </b><br>";
+
     $todosOsCliente = ClienteModel::verTodosOsClientes();
+    echo '<table border="1" width="100%" cellpadding="10" style="border-collapse: collapse;">
+    <tr>
+        <th>ID</th><th>Nome</th><th>Email</th><th>Telefone</th><th>CPF</th><th>Funções</th>
+    </tr>';
         foreach($todosOsCliente as $cliente){
             $idVar = $cliente->getId();
             $clienteJSON = $cliente->clienteJSON($cliente);
-            echo $cliente.'
-            <form  method="POST" action="actionsPHP/editaCliente.php">
-                <input type="hidden" name="dados" value="'.htmlspecialchars($idVar).'"></input>
-                <button type="submit">editar</button>
-            </form>';
-        
-        //    '<button onClick="editarCliente(' . $idVar . ')">editar</button><br>
-        //';
+            echo'<tr>
+                <td>'.$cliente->getId().'</td>
+                <td>'.$cliente->getNome().'</td>
+                <td>'.$cliente->getEmail().'</td>
+                <td>'.$cliente->getTelefone().'</td>
+                <td>'.$cliente->getCpf().'</td>
+                <td>
+                    <button>Ver Pedidos</button>
+                    <button>Ver Endereços</button>
+                </td>
+                </tr>
+            ';
+        }; 
+        echo'</table>';
+
+     echo"<br> <b>All emplyed Registered </b><br>";
+
+   $todosOsFuncionarios = funcionarioModel::verTodosOsFuncionários();
+   echo'
+   <table <table border="1" width="100%" cellpadding="10" style="border-collapse: collapse;" >
+    <tr>
+        <th>ID</th><th>Nome</th><th>Email</th><th>Data de Registro</th><th>Ultima Modificação</th><th>Funções</th>
+    </tr>';
+    foreach($todosOsFuncionarios as $funcionario){
+        $idVar = $funcionario->getId();
+        echo'<tr>
+            <td>'.$funcionario->getId().'</td>
+            <td>'.$funcionario->getNome().'</td>
+            <td>'.$funcionario->getEmail().'</td>
+            <td>'.$funcionario->getDataCadastro().'</td>
+            <td>'.$funcionario->getUltimaModificacao().'</td>
+            <td> 
+                <button>editar</button>
+                <button>excluir</button>
+            </td>
+        </tr>';
     }
-    echo"<br> <b>All address Registered </b><br>";  
-    $todosOsEnderecos = EnderecoModel::buscarTodosOsEnderecos();
-    foreach($todosOsEnderecos as $endereco){
-        $idVar = $endereco->getId();
-        echo $endereco.
-        '<button onClick="editarCliente(' . $idVar . ')">editar</button><br>
-        ';
-    }
+    echo'</table>';
 
 
-
-
-
-    $unicoCliente = ClienteModel::verClientePorId(1);
-    echo "<br> <b>cliente unico </b>". $unicoCliente;
-
-    echo"<br> $nome";
-
+   
     ?>
 </div>
 
@@ -67,7 +89,11 @@ session_start();
 
 
     
-    <a href="index.php">Voltar</a>
+<?php
+     echo'<a href="index.php">
+    <button onClick="'.session_destroy().'">Sair</button>
+    </a>';
+?>
     <footer>
         <img src="images/wave.svg" alt="">
 

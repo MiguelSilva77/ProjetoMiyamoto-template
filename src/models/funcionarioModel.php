@@ -91,6 +91,26 @@ class funcionarioModel{
             return'dados incorretos';
         }
     }
+
+    public static function verTodosOsFuncionários(){
+        $pdo = Conexao::conecta();
+        $funcionarios = [];
+
+        $sql = "SELECT * FROM FUNCIONARIOTESTE";
+        $stmt = $pdo->query($sql);
+        while($row = $stmt->fetch(PDO::FETCH_ASSOC)){
+            $funcionario = new funcionarioModel();
+
+            $funcionario->setId($row['id_funcionario']);
+            $funcionario->setNome($row['nome']);
+            $funcionario->setEmail($row['email']);
+            $funcionario->setDataCadastro($row['dataCadastro']);
+            $funcionario->setUltimaModificacao($row['ultimaModificacao']);
+
+            $funcionarios[] = $funcionario;
+        }
+        return $funcionarios;
+    }
 }
 
 
