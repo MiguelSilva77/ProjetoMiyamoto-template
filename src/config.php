@@ -1,5 +1,11 @@
 <?php
 session_start();
+
+if(!isset($_SESSION['id']) || empty($_SESSION['id'])){
+    session_destroy();
+    header('Location: index.php');
+    exit;
+}
 ?>
 
 <!DOCTYPE html>
@@ -25,11 +31,10 @@ session_start();
     require_once  __DIR__.'/models/clienteModel.php';
     require_once  __DIR__.'/models/enderecoModel.php';
     require_once  __DIR__.'/models/funcionarioModel.php';
+    require_once  __DIR__.'/models/produtoModel.php';
 
-
-    $nome = $_SESSION['nome'];
+    $nome = $_SESSION['nome'] ?? null;
     echo"<h2>Olá $nome</h2>";
-
 
     echo"<br> <b>All clients Registered </b><br>";
 
@@ -80,8 +85,25 @@ session_start();
     }
     echo'</table>';
 
-
-   
+$todosOsprodutos = ProdutoModel::verTodosOsProdutos();
+echo"<br> <b>all products registered</b>";
+     echo'
+   <table <table border="1" width="100%" cellpadding="10" style="border-collapse: collapse;" >
+    <tr>
+        <th>ID</th><th>Nome</th><th>Preço</th><th>Descrição</th><th>Funções</th>
+    </tr>';
+   foreach($todosOsprodutos as $produto){
+    $idVar = $produto->getId();
+    echo'<tr>
+        <td>'.$produto->getId().'</td>
+        <td>'.$produto->getNome().'</td>
+        <td>'.$produto->getPreco().'</td>
+        <td>'.$produto->getDescricao().'</td>
+        <td>Futuras funções aqui</td>
+        </tr>
+        ';
+   }
+    echo'</table>';
     ?>
 </div>
 

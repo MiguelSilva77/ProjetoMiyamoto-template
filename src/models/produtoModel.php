@@ -47,7 +47,37 @@ class ProdutoModel{
         $this->descricao = $descricao;
     }
 
+    public function adicionaProduto(){
+        $pdo = Conexao::conecta();
+        $sql = "INSERT INTO TESTEPRODUTO (id_produto, nome, preco, descricao)
+                VALUES (null, ?, ?, ?)";
+        $stmt = $pdo->prepare($sql);
+        $stmt->execute([
+            $this->nome,
+            $this->preco,
+            $this->descricao
+        ]);
+        $this->id_produto = $pdo->lastInsertId();
+        return $this;
+    }
 
+    public static function verTodosOsProdutos(){
+        $pdo = Conexao::conecta();
+        $produtos = [];
+        $sql = "SELECT * FROM TESTEPRODUTO";
+        $stmt = $pdo->query($sql);
+        while($rows = $stmt->fetch(PDO::FETCH_ASSOC)){
+            $produto = new ProdutoModel();
+
+            $produto->setId($rows['id_produto']);
+            $produto->setNome($rows['nome']);
+            $produto->setPreco($rows['preco']);
+            $produto->setDescricao($rows['descricao']);
+
+            $produtos[] = $produto;
+        }
+        return $produtos;
+    }
 
 
 }
