@@ -111,6 +111,12 @@ class funcionarioModel{
         }
         return $funcionarios;
     }
+
+    public static function deletaFuncionario($id){
+        $pdo = Conexao::conecta();
+        $sql = "DELETE FROM FUNCIONARIOTESTE WHERE id_funcionario = '$id'";
+        $stmt = $pdo->query($sql);
+    }
 }
 
 

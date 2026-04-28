@@ -1,7 +1,7 @@
 <?php
 session_start();
 
-if(!isset($_SESSION['id']) || empty($_SESSION['id'])){
+if(!isset($_SESSION['id'])){
     session_destroy();
     header('Location: index.php');
     exit;
@@ -78,8 +78,12 @@ if(!isset($_SESSION['id']) || empty($_SESSION['id'])){
             <td>'.$funcionario->getDataCadastro().'</td>
             <td>'.$funcionario->getUltimaModificacao().'</td>
             <td> 
+                <form action="actionsPHP/deletaFuncionario.php" method="post" onsubmit="return confirm(\'Excluir?\')">
+                    <input type="hidden" name ="id" id="id" value="'.$idVar.'"></input>
+                    <button type="submit" onClick="return confirm(\"Excluir?\")" >excluir</button>
+                </form>
                 <button>editar</button>
-                <button>excluir</button>
+                
             </td>
         </tr>';
     }
@@ -104,6 +108,9 @@ echo"<br> <b>all products registered</b>";
         ';
    }
     echo'</table>';
+    echo' <a href="actionsPHP/adicionaProduto.php">
+    <button>Adicionar Produto</button>
+    </a>';
     ?>
 </div>
 
@@ -111,11 +118,11 @@ echo"<br> <b>all products registered</b>";
 
 
     
-<?php
-     echo'<a href="index.php">
-    <button onClick="'.session_destroy().'">Sair</button>
-    </a>';
-?>
+
+    <a href="logout.php">
+    <button>Sair</button>
+    </a>;
+
     <footer>
         <img src="images/wave.svg" alt="">
 
