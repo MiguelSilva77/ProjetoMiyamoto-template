@@ -79,6 +79,12 @@ class ProdutoModel{
         return $produtos;
     }
 
+    public static function deletaProduto($id){
+        $pdo = Conexao::conecta();
+        $sql = "DELETE FROM TESTEPRODUTO WHERE id_produto = '$id' ";
+        $stmt = $pdo->query($sql);
+    }
+
 
 }
 

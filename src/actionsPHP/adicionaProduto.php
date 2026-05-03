@@ -10,12 +10,12 @@ require_once __DIR__.'/../models/produtoModel.php';
 <input type="text" name="nome" id="nome" maxlength="100">
 
 <label for="preco">Preço</label>
-<input type="number" name="preco" id="preco" maxlength="3">
+<input type="number" name="preco" id="preco" step="0.01" min="0.01">
 
 <label for="descricao">Descrição</label>
 <input type="text" name="descricao" id="descricao" maxlength="200">
 
-<button type="submit">cadstrar</button>
+<button type="submit">cadastrar</button>
 
 </form>
 

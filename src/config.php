@@ -103,7 +103,14 @@ echo"<br> <b>all products registered</b>";
         <td>'.$produto->getNome().'</td>
         <td>'.$produto->getPreco().'</td>
         <td>'.$produto->getDescricao().'</td>
-        <td>Futuras funções aqui</td>
+        <td>
+         <form action="actionsPHP/deletaProduto.php" method="post" onsubmit="return confirm(\'Excluir?\')">
+                    <input type="hidden" name ="id" id="id" value="'.$idVar.'"></input>
+                    <button type="submit" onClick="return confirm(\"Excluir?\")" >excluir</button>
+                </form>
+        <button>editar</button>
+        
+        </td>
         </tr>
         ';
    }
