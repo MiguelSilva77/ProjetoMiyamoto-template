@@ -85,6 +85,24 @@ class ProdutoModel{
         $stmt = $pdo->query($sql);
     }
 
+    public static function verProdutoPorId($id){
+        $pdo = Conexao::conecta();
+        $produtos = null;
+        $sql = "SELECT * FROM TESTEPRODUTO WHERE id_produto = '$id'";
+        $stmt = $pdo->query($sql);
+        while($row = $stmt->fetch(PDO::FETCH_ASSOC)){
+            $produto = new ProdutoModel();
+
+            $produto->setId($row['id_produto']);
+            $produto->setNome($row['nome']);
+            $produto->setPreco($row['preco']);
+            $produto->setDescricao($row['descricao']);
+
+            $produtos = $produto;
+        }
+        return $produtos;
+    }
+
 
 }
 

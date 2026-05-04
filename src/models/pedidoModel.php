@@ -2,7 +2,6 @@
 
 class PedidoModel{
     private $idPedido;
-    private $item = [];
     private $cliente;
     private $endereco;
     private $dataPedido;
@@ -27,10 +26,6 @@ class PedidoModel{
         return $this->endereco;
     }
 
-    public function getItem(){
-        return $this->item;
-    }
-
     public function getDataPedido(){
         return $this->dataPedido;
     }
@@ -49,10 +44,6 @@ class PedidoModel{
 
     public function setDataPedido($data){
         $this->dataPedido = $data;
-    }
-
-    public function adicionaItem($item){
-        $this->item[] = $item;
     }
 }
 

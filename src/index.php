@@ -1,3 +1,6 @@
+<?php
+session_start();
+?>
 <!-- Criador Pedro Vidal -->
 
 <!DOCTYPE html>
@@ -21,7 +24,15 @@
 <body>
     <header>
         <nav id="navbar">
-            <i class="fa-solid fa-burger" id="nav_logo"> Miyamoto <br>food</i>
+            <?php
+            //echo var_export($_SESSION);
+            if(isset($_SESSION['nome'])){
+                $nome = $_SESSION['nome'];
+                echo'<i class="fa-solid fa-burger" id="nav_logo"> Olá <br>'.explode(" ", $nome)[0].'</i>';
+            }else{
+                echo'<i class="fa-solid fa-burger" id="nav_logo"> Miyamoto <br>food</i>';
+            }
+            ?>
 
             <ul id="nav_list">
                 <li class="nav-item active">
@@ -33,20 +44,53 @@
                 <li class="nav-item">
                     <a href="#testimonials">Avaliações</a>
                 </li>
+                <li class="nav-item">
+                    <a href="carrinho.php">Carrinho</a>
+                </li>
             </ul>
 
-            <div class="botoesHeader"> 
-                 <a href="login.php">
-                 <button class="btn-default-hea" >
-                Login
-                </button>
-            </a>
+            <div style="display: flex;">
+            
+               <?php
+            if(isset($_SESSION['id_cliente'])){
+                echo'
+                <a href="paginaUsuario.php">
+                    <button class="btn-default-hea" >
+                    Login
+                    </button>
+                </a>
+                ';
+            }else{
+                echo'
+                <a href="login.php">
+                    <button class="btn-default-hea" >
+                    Login
+                    </button>
+                </a>
+                ';
+            }
 
-            <a href="configuracoes.php">
-                 <button class="btn-default-hea" >
-                Config
-                </button>
-            </a>
+            if(isset($_SESSION['id'])){
+                echo'
+                    <a href="config.php">
+                        <button class="btn-default-hea" >
+                        Config
+                        </button>
+                    </a>
+                ';
+            }else{
+              echo'
+                    <a href="configuracoes.php">
+                        <button class="btn-default-hea" >
+                        Config
+                        </button>
+                    </a>
+                ';  
+            }
+            
+            ?>
+
+            
 
             </div>
            
@@ -69,11 +113,28 @@
                 </li>
             </ul>
 
-            <a href="login.php">
-                 <button class="btn-default" >
-                Login
-                </button>
-            </a>
+            <?php
+            if(isset($_SESSION['id_cliente'])){
+                echo'
+                <a href="paginaUsuario.php">
+                    <button class="btn-default" >
+                    Login
+                    </button>
+                </a>
+                ';
+            }else{
+                echo'
+                <a href="login.php">
+                    <button class="btn-default" >
+                    Login
+                    </button>
+                </a>
+                ';
+            }
+            
+            ?>
+
+           
         </div>
     </header>
 
@@ -156,9 +217,13 @@
 
                     <div class="dish-price">
                         <h4>R$35,00</h4>
-                        <button class="btn-default">
-                            <i class="fa-solid fa-basket-shopping"></i>
-                        </button>
+                        <form action="carrinho.php" method="post">
+                            <input type="hidden" value="5" name="produto" id="produto">
+                            <input type="hidden" value="<?php echo @$_SESSION['id_cliente'] ?>" id="cliente" name="cliente">
+                            <button type="submit" class="btn-default">
+                                <i class="fa-solid fa-basket-shopping"></i>
+                            </button>
+                        </form>
                     </div>
                 </div>
 
@@ -189,9 +254,14 @@
 
                     <div class="dish-price">
                         <h4>R$13,00</h4>
-                        <button class="btn-default">
-                            <i class="fa-solid fa-basket-shopping"></i>
-                        </button>
+                        <form action="carrinho.php" method="post">
+                            <input type="hidden" value="6" name="produto" id="produto">
+                             <input type="hidden" value="<?php echo @$_SESSION['id_cliente'] ?>" id="cliente" name="cliente">
+                            <button type="submit" class="btn-default">
+                                <i class="fa-solid fa-basket-shopping"></i>
+                            </button>
+                        </form>
+                       
                     </div>
                 </div>
 
@@ -222,9 +292,13 @@
 
                     <div class="dish-price">
                         <h4>R$18,00</h4>
-                        <button class="btn-default">
-                            <i class="fa-solid fa-basket-shopping"></i>
-                        </button>
+                       <form action="carrinho.php" method="post">
+                            <input type="hidden" value="7" name="produto" id="produto">
+                            <input type="hidden" value="<?php echo @$_SESSION['id_cliente'] ?>" id="cliente" name="cliente">
+                            <button type="submit" class="btn-default">
+                                <i class="fa-solid fa-basket-shopping"></i>
+                            </button>
+                        </form>
                     </div>
                 </div>
 
@@ -255,9 +329,13 @@
 
                     <div class="dish-price">
                         <h4>R$25,00</h4>
-                        <button class="btn-default">
-                            <i class="fa-solid fa-basket-shopping"></i>
-                        </button>
+                        <form action="carrinho.php" method="post">
+                            <input type="hidden" value="8" name="produto" id="produto">
+                            <input type="hidden" value="<?php echo @$_SESSION['id_cliente'] ?>" id="cliente" name="cliente">
+                            <button type="submit" class="btn-default">
+                                <i class="fa-solid fa-basket-shopping"></i>
+                            </button>
+                        </form>
                     </div>
                 </div>
             </div>

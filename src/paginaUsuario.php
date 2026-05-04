@@ -41,3 +41,11 @@ echo'<button>Adicionar Endereço</button>';
 
 ?>
 
+<a href="index.php">
+    <button>Página Inicial</button>
+</a>
+  <a href="logout.php">
+    <button>Deslogar</button>
+    </a>;
+
+
