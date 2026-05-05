@@ -1,9 +1,14 @@
 <?php
 session_start();
-$totalDeItens = $_SESSION['totalDeItens'] ?? 0;
+if(!isset($_SESSION['totalDeItens'])){
+    $_SESSION['totalDeItens'] = 0;
+}
 if(!isset($_SESSION['items'])){
     $_SESSION['items'] = [];
 }
+
+$idCliente = $_SESSION['idCliente'] ?? null;
+
 $valorTotal = 0;
 $idProduto = null;
     
@@ -12,6 +17,8 @@ if(isset($_POST['cliente']) && isset($_POST['produto'])){
     $idProduto = $_POST['produto'];
     $_SESSION['totalDeItens'] ++ ;
     $_SESSION['items'][] = $idProduto;
+    $_SESSION['idCliente'] = $idCliente;
+
 
     header("Location: " . $_SERVER['PHP_SELF']);
     exit;
@@ -20,6 +27,7 @@ require_once 'conection/conexao.php';
 require_once 'models/produtoModel.php';
 require_once 'models/enderecoModel.php';
 require_once 'models/clienteModel.php';
+require_once 'models/clienteEnderecoModel.php';
 require_once 'models/itemModel.php';
 require_once 'models/pedidoModel.php';
 
@@ -69,9 +77,10 @@ exit;
                 <li class="nav-item">
                     <a href="index.php">Avaliações</a>
                 </li>
-                <li class="nav-item">
-                    <a href="carrinho.php">Carrinho</a>
-                </li>
+                    <a href="carrinho.php">carrinho
+                        <i class="fa-solid fa-basket-shopping"></i>
+                        <?php echo $_SESSION['totalDeItens']?>
+                    </a>
             </ul>
 
             <div style="display: flex;">
@@ -164,12 +173,80 @@ exit;
     </header>
 
     <?php
-    var_dump($_SESSION['items']);
-    $produto = ProdutoModel::verProdutoPorId($_SESSION['items'][0]);
+    if($_SESSION['totalDeItens'] > 0){
+        $todosOsProdutos = [];
+    foreach($_SESSION['items'] as $idProduto){
+        $produto = ProdutoModel::verProdutoPorId($idProduto);
+        $todosOsProdutos[] = $produto;
+    }
 
-    echo'Seu item '.$produto->getNome().'';
+    echo'<h1>itens no seu Carrinho</h1>';
    
-    echo $totalDeItens;
+    echo'
+    <table border="1" width="100%" cellpadding="10" style="border-collapse: collapse;">
+        <tr>
+            <th>Item</th><th>Descrição</th><th>Preço</th><th>Funções</th>
+        </tr>
+    ';
+    foreach($todosOsProdutos as $produto){
+        $valorTotal += $produto->getPreco();
+        echo'
+            <tr>
+            <td>'.$produto->getNome().'</td>
+            <td>'.$produto->getDescricao().'</td>
+            <td>'.$produto->getPreco().'</td>
+            <td>
+                <button>Excluir</button>
+            </td>
+            </tr>
+        ';
+    }
+    echo'</table>';
+
+    echo $_SESSION['totalDeItens'];
+    var_dump($_SESSION['idCliente']);
+    $idEnderecos = ClienteEnderecoModel::buscarEnderecoPorIdDoCliente($_SESSION['idCliente']);
+    $enderecos = [];
+    foreach($idEnderecos as $id){
+        $endereco = EnderecoModel::procurarEnderecoPorId($id);
+        $enderecos[] = $endereco;
+    }
+
+    echo'<h1>Seus Endereços</h1>';
+   echo'
+        <form method="post" action="actionsPHP/adicionaPedido.php">
+            <input type="hidden" name="cliente" id="cliente" value="'.$_SESSION['idCliente'].'">
+   
+            <table border="1" width="100%" cellpadding="10" style="border-collapse: collapse;">
+                <tr>
+                    <th>escolha</th><th>Rua</th><th>Número</th><th>Bairro</th><th>Complemento</th>
+                </tr>
+    ';
+    $indice = 0;
+    foreach($enderecos as $endereco){
+        $indice ++;
+        $check = ($indice == 1) ? 'checked':' ';
+        echo'
+            <tr>
+            <td>
+                <input type="radio" name="enderecoEscolha" value="'.$endereco->getId().'"'.$check.'> 
+            </td>
+            <td>'.$endereco->getRua().'</td>
+            <td>'.$endereco->getNumero().'</td>
+            <td>'.$endereco->getBairro().'</td>
+            <td>
+                <button>Excluir</button>
+            </td>
+            </tr>
+        ';
+    }
+    echo'
+                </table>
+            <button type="submit">Comprar</button>
+        </form>';
+    }else{
+        echo'<h1>Carrrinho Vazio</h1>';
+    }
     
     ?>
 

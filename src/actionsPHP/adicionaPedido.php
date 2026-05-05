@@ -8,18 +8,9 @@ require_once '../models/itemModel.php';
 require_once '../models/pedidoModel.php';
 
 
-
-
-
-if(!isset($_POST['cliente'])|| $_POST['cliente'] == null){
-   echo "<script>alert('Login não realizado, entre com seu usuário e senha para continuar a operação'); window.location.href='../login.php';</script>";
-exit;
-
-}
-
+$endereco = $_POST['enderecoEscolha'];
 $cliente = $_POST['cliente'];
-$produto = $_POST['produto'];
 
-echo "produto $produto cliente $cliente";
+echo "cliente: $cliente endereco: $endereco";
 
 ?>

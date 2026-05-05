@@ -45,7 +45,14 @@ session_start();
                     <a href="#testimonials">Avaliações</a>
                 </li>
                 <li class="nav-item">
-                    <a href="carrinho.php">Carrinho</a>
+                    <a href="carrinho.php">carrinho
+                        <i class="fa-solid fa-basket-shopping"></i>
+                        <?php
+                        if(isset($_SESSION['totalDeItens'])){
+                            echo $_SESSION['totalDeItens'];
+                        }
+                        ?>
+                    </a>
                 </li>
             </ul>
 
@@ -219,7 +226,7 @@ session_start();
                         <h4>R$35,00</h4>
                         <form action="carrinho.php" method="post">
                             <input type="hidden" value="5" name="produto" id="produto">
-                            <input type="hidden" value="<?php echo @$_SESSION['id_cliente'] ?>" id="cliente" name="cliente">
+                            <input type="hidden" value="<?= $_SESSION['id_cliente'] ?? '' ?>" name="cliente">
                             <button type="submit" class="btn-default">
                                 <i class="fa-solid fa-basket-shopping"></i>
                             </button>
@@ -253,10 +260,10 @@ session_start();
                     </div>
 
                     <div class="dish-price">
-                        <h4>R$13,00</h4>
+                        <h4>R$13,55</h4>
                         <form action="carrinho.php" method="post">
                             <input type="hidden" value="6" name="produto" id="produto">
-                             <input type="hidden" value="<?php echo @$_SESSION['id_cliente'] ?>" id="cliente" name="cliente">
+                             <input type="hidden" value="<?= $_SESSION['id_cliente'] ?? '' ?>" name="cliente">
                             <button type="submit" class="btn-default">
                                 <i class="fa-solid fa-basket-shopping"></i>
                             </button>
@@ -294,7 +301,7 @@ session_start();
                         <h4>R$18,00</h4>
                        <form action="carrinho.php" method="post">
                             <input type="hidden" value="7" name="produto" id="produto">
-                            <input type="hidden" value="<?php echo @$_SESSION['id_cliente'] ?>" id="cliente" name="cliente">
+                            <input type="hidden" value="<?= $_SESSION['id_cliente'] ?? '' ?>" name="cliente">
                             <button type="submit" class="btn-default">
                                 <i class="fa-solid fa-basket-shopping"></i>
                             </button>
@@ -331,7 +338,7 @@ session_start();
                         <h4>R$25,00</h4>
                         <form action="carrinho.php" method="post">
                             <input type="hidden" value="8" name="produto" id="produto">
-                            <input type="hidden" value="<?php echo @$_SESSION['id_cliente'] ?>" id="cliente" name="cliente">
+                            <input type="hidden" value="<?= $_SESSION['id_cliente'] ?? '' ?>" name="cliente">
                             <button type="submit" class="btn-default">
                                 <i class="fa-solid fa-basket-shopping"></i>
                             </button>
