@@ -7,10 +7,37 @@ require_once '../models/clienteModel.php';
 require_once '../models/itemModel.php';
 require_once '../models/pedidoModel.php';
 
-
+$mensagemDeErro = "";
+$pdo = Conexao::conecta();
 $endereco = $_POST['enderecoEscolha'];
 $cliente = $_POST['cliente'];
+$produtos = json_decode($_POST['items'], true);
 
-echo "cliente: $cliente endereco: $endereco";
+echo "cliente: $cliente endereco: $endereco produtos: ";
+var_dump($produtos);
+echo"<hr>";
+var_dump($_POST);
+
+try{
+    $pdo->beginTransaction();
+    $pedido = new PedidoModel($cliente, $endereco, null, null); 
+    $idPedido = $pedido->inserePedido();   
+
+    foreach($produtos as $produto){
+        $produtoCardapio = ProdutoModel::verProdutoPorId($produto);
+        $item = new ItemModel($idPedido, $produtoCardapio->getId(),1,$produtoCardapio->getPreco());
+        $item->inserirItem();
+    }
+    $pdo->commit();
+}catch (PDOException $e){
+    $pdo->rollBack();
+    $mensagemDeErro = "aconteceu um erro $e";
+}catch (RuntimeException $e){
+    $pdo->rollBack();
+    $mensagemDeErro = "aconteceu um erro $e";
+}catch (Exception $e){
+    $pdo->rollBack();
+    $mensagemDeErro = "aconteceu um erro $e";
+}
 
 ?>

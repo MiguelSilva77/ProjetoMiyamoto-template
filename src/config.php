@@ -53,7 +53,10 @@ if(!isset($_SESSION['id'])){
                 <td>'.$cliente->getTelefone().'</td>
                 <td>'.$cliente->getCpf().'</td>
                 <td>
-                    <button>Ver Pedidos</button>
+                    <form method="post" action="actionsPHP/verPedidosDoCliente.php">
+                        <input type="hidden" name="idCliente" id="idCliente" value="'.$idVar.'">
+                        <button type="submit">Ver Pedidos</button>
+                    </form>
                     <button>Ver Endereços</button>
                 </td>
                 </tr>
@@ -88,6 +91,7 @@ if(!isset($_SESSION['id'])){
         </tr>';
     }
     echo'</table>';
+    echo'<button>Adicionar Funcionário</button>';
 
 $todosOsprodutos = ProdutoModel::verTodosOsProdutos();
 echo"<br> <b>all products registered</b>";

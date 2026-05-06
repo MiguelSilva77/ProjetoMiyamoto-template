@@ -6,6 +6,8 @@ referente a tabela clientes
 */
 require_once __DIR__.'/../conection/conexao.php';
 require_once __DIR__.'/../models/enderecoModel.php';
+require_once __DIR__.'/../models/pedidoModel.php';
+
 
     class ClienteModel{
         
@@ -176,6 +178,25 @@ require_once __DIR__.'/../models/enderecoModel.php';
             public static function clienteJSON($cliente){
                 $clienteJSON = json_encode($cliente);
                 return $clienteJSON;
+            }
+
+            public static function verPedidoPorCliente($id){
+                $pdo = Conexao::conecta();
+                $pedidos = [];
+                $sql = "SELECT * FROM PEDIDOTESTE WHERE idCliente = $id ORDER BY idPedido DESC";
+                $stmt = $pdo->query($sql);
+                while($row = $stmt->fetch(PDO::FETCH_ASSOC)){
+                   $pedido = new PedidoModel();
+                   
+                   $pedido->setId($row['idPedido']);
+                   $pedido->setCliente($row['idCliente']);
+                   $pedido->setEndereco($row['idEndereco']);
+                   $pedido->setDataPedido($row['dataPedido']);
+                   
+                   $pedidos[] = $pedido;
+                }
+
+                return $pedidos;
             }
 
             

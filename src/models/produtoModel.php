@@ -88,7 +88,7 @@ class ProdutoModel{
     public static function verProdutoPorId($id){
         $pdo = Conexao::conecta();
         $produtos = null;
-        $sql = "SELECT * FROM TESTEPRODUTO WHERE id_produto = '$id'";
+        $sql = "SELECT * FROM TESTEPRODUTO WHERE id_produto = $id";
         $stmt = $pdo->query($sql);
         while($row = $stmt->fetch(PDO::FETCH_ASSOC)){
             $produto = new ProdutoModel();

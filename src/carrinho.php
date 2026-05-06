@@ -11,6 +11,7 @@ $idCliente = $_SESSION['idCliente'] ?? null;
 
 $valorTotal = 0;
 $idProduto = null;
+$compraFeita = false;
     
 if(isset($_POST['cliente']) && isset($_POST['produto'])){
     $idCliente = $_POST['cliente'];
@@ -201,7 +202,9 @@ exit;
             </tr>
         ';
     }
-    echo'</table>';
+    echo'</table><br><br>
+    <h3>Valor Total das Compras: '.$valorTotal.'</h3>
+    ';
 
     echo $_SESSION['totalDeItens'];
     var_dump($_SESSION['idCliente']);
@@ -216,7 +219,7 @@ exit;
    echo'
         <form method="post" action="actionsPHP/adicionaPedido.php">
             <input type="hidden" name="cliente" id="cliente" value="'.$_SESSION['idCliente'].'">
-   
+            <input type="hidden" name="items" value="'.htmlspecialchars(json_encode($_SESSION["items"]), ENT_QUOTES, "UTF-8").'">
             <table border="1" width="100%" cellpadding="10" style="border-collapse: collapse;">
                 <tr>
                     <th>escolha</th><th>Rua</th><th>Número</th><th>Bairro</th><th>Complemento</th>
@@ -242,10 +245,16 @@ exit;
     }
     echo'
                 </table>
-            <button type="submit">Comprar</button>
+            <button type="submit" onclick="'.$compraFeita = true.'">Comprar</button>
         </form>';
     }else{
         echo'<h1>Carrrinho Vazio</h1>';
+    }
+
+    if($compraFeita == true){
+        $_SESSION['items'] = [];
+        $_SESSION['totalDeItens'] = 0;
+
     }
     
     ?>

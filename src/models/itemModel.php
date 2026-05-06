@@ -7,7 +7,7 @@ private $produto;
 private $quantidade;
 private $precoUnitario;
 
-public function __construct($pedido, $produto, $quantidade, $precoUnitario, $id_item = null){
+public function __construct($pedido = null, $produto = null, $quantidade = null, $precoUnitario = null, $id_item = null){
     $this->pedido = $pedido;
     $this->produto = $produto;
     $this->quantidade = $quantidade;
@@ -55,6 +55,38 @@ public function setQuantidade($quantidade){
 
 public function setPrecoUnitario($precoUnitario){
     $this->precoUnitario = $precoUnitario;
+}
+
+public function inserirItem(){
+    $pdo = Conexao::conecta();
+    $sql = "INSERT INTO ITEM_PEDIDO_TESTE (idPedido, idProduto, quantidade, preco_unitario)
+        VALUES (?, ?, ?, ?)";
+    $stmt = $pdo->prepare($sql);
+    $stmt->execute([
+        $this->pedido,
+        $this->produto,
+        $this->quantidade,
+        $this->precoUnitario,
+    ]);
+}
+
+public static function verPedidoPorId($id){
+    $pdo = Conexao::conecta();
+    $items = [];
+    $sql = "SELECT * FROM ITEM_PEDIDO_TESTE WHERE idPedido = $id";
+    $stmt = $pdo->query($sql);
+    while($row = $stmt->fetch(PDO::FETCH_ASSOC)){
+        $item = new ItemModel();
+
+        $item->setId($row['idItem']);
+        $item->setPedido($row['idPedido']);
+        $item->setProduto($row['idProduto']);
+        $item->setQuantidade($row['quantidade']);
+        $item->setPrecoUnitario($row['preco_unitario']);
+
+        $items[] = $item;
+    }
+    return $items;
 }
 
 }

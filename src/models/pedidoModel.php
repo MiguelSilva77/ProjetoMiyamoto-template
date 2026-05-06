@@ -6,7 +6,7 @@ class PedidoModel{
     private $endereco;
     private $dataPedido;
 
-    public function __construct($cliente, $endereco, $idPedido = null, $data = null){
+    public function __construct($cliente = null, $endereco = null, $idPedido = null, $data = null){
         $this->idPedido = $idPedido;
         $this->cliente = $cliente;
         $this->endereco = $endereco;
@@ -42,8 +42,21 @@ class PedidoModel{
         $this->endereco = $endereco;
     }
 
-    public function setDataPedido($data){
+     public function setDataPedido($data){
         $this->dataPedido = $data;
+    }
+
+
+    public function inserePedido(){
+        $pdo = Conexao::conecta();
+        $sql = "INSERT INTO PEDIDOTESTE (idCliente, idEndereco)
+        VALUES (?, ?)"; 
+        $stmt = $pdo->prepare($sql);
+        $stmt->execute([
+            $this->cliente,
+            $this->endereco
+        ]);
+        return $this->idPedido = $pdo->lastInsertId();
     }
 }
 
