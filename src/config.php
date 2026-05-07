@@ -85,13 +85,18 @@ if(!isset($_SESSION['id'])){
                     <input type="hidden" name ="id" id="id" value="'.$idVar.'"></input>
                     <button type="submit" onClick="return confirm(\"Excluir?\")" >excluir</button>
                 </form>
-                <button>editar</button>
-                
+                <form action="actionsPHP/editaFuncionario.php" method="post">
+                    <input type="hidden" name="id" id="id" value="'.$idVar.'"></input>
+                    <button type="submit">Editar</button>
+                </form>
             </td>
         </tr>';
     }
     echo'</table>';
-    echo'<button>Adicionar Funcionário</button>';
+    echo'<a href="actionsPHP/adicionaFuncionario.php">
+            <button>Adicionar Funcionário</button>
+        </a>
+    ';
 
 $todosOsprodutos = ProdutoModel::verTodosOsProdutos();
 echo"<br> <b>all products registered</b>";

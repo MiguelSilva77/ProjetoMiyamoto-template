@@ -59,6 +59,10 @@ class funcionarioModel{
         $this->email = $email;
     }
 
+    public function setSenha($senha){
+        $this->senha = $senha;
+    }
+
     public function setDataCadastro($dataCadastro){
         $this->dataCadastro = $dataCadastro;
     }
@@ -116,6 +120,43 @@ class funcionarioModel{
         $pdo = Conexao::conecta();
         $sql = "DELETE FROM FUNCIONARIOTESTE WHERE id_funcionario = '$id'";
         $stmt = $pdo->query($sql);
+    }
+
+    public function editaFuncionario($funcionario){
+        $pdo = Conexao::conecta();
+        $sql = "UPDATE FUNCIONARIOTESTE SET
+                nome = :nome,
+                email = :email
+                WHERE id_funcionario = :id"; 
+        $stmt = $pdo->prepare($sql);
+
+        $stmt->bindValue(':nome',$funcionario->getNome());
+        $stmt->bindValue(':email',$funcionario->getEmail());
+        $stmt->bindValue(':id',$funcionario->getId());
+
+        $stmt->execute();
+
+        return $funcionario->id_funcionario;
+    }
+
+    public static function verFuncionarioPorId($id){
+        $pdo = Conexao::conecta();
+        $sql = "SELECT * FROM FUNCIONARIOTESTE WHERE id_funcionario = $id";
+        $stmt = $pdo->query($sql);
+        $funcionarios = null;
+        while($row = $stmt->fetch(PDO::FETCH_ASSOC)){
+            $funcionario = new funcionarioModel();
+
+            $funcionario->setId($row['id_funcionario']);
+            $funcionario->setNome($row['nome']);
+            $funcionario->setEmail($row['email']);
+            $funcionario->setSenha($row['senha']);
+            $funcionario->setDataCadastro($row['dataCadastro']);
+            $funcionario->setUltimaModificacao($row['ultimaModificacao']);
+
+            $funcionarios = $funcionario;
+        }
+        return $funcionarios;
     }
 }
 

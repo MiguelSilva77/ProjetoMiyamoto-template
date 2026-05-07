@@ -7,7 +7,8 @@ if(!isset($_SESSION['items'])){
     $_SESSION['items'] = [];
 }
 
-$idCliente = $_SESSION['idCliente'] ?? null;
+
+$idCliente = $_SESSION['id_cliente'] ?? null;
 
 $valorTotal = 0;
 $idProduto = null;
@@ -174,8 +175,9 @@ exit;
     </header>
 
     <?php
+            $todosOsProdutos = [];
+
     if($_SESSION['totalDeItens'] > 0){
-        $todosOsProdutos = [];
     foreach($_SESSION['items'] as $idProduto){
         $produto = ProdutoModel::verProdutoPorId($idProduto);
         $todosOsProdutos[] = $produto;
@@ -245,17 +247,13 @@ exit;
     }
     echo'
                 </table>
-            <button type="submit" onclick="'.$compraFeita = true.'">Comprar</button>
+            <button type="submit">Comprar</button>
         </form>';
     }else{
         echo'<h1>Carrrinho Vazio</h1>';
     }
 
-    if($compraFeita == true){
-        $_SESSION['items'] = [];
-        $_SESSION['totalDeItens'] = 0;
-
-    }
+    
     
     ?>
 

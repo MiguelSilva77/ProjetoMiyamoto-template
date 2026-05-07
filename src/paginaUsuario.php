@@ -30,14 +30,18 @@ echo $cliente.'
 
 echo "<h1>Meus endereços</h1>";
 foreach($todosOsEnderecos as $endereco){
-    $idVar = $endereco->getId();
+    $idVar = $endereco->getId() ?? null;
     echo $endereco.
     '<form method="post" action="actionsPHP/editaEndereco.php">
         <input type="hidden" id="dados" name="dados" value="'.$idVar.'">
         <button type="submit">Editar</button> 
     </form>';
 }
-echo'<button>Adicionar Endereço</button>';
+echo'
+    <form method="post" action="actionsPHP/adicionaEndereco.php">
+        <input type="hidden" id="id" name="id" value="'.$_SESSION['id_cliente'].'">
+        <button type="submit">Adicionar</button> 
+    </form>';;
 
 ?>
 

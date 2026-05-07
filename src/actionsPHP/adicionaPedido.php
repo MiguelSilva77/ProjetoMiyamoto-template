@@ -7,6 +7,11 @@ require_once '../models/clienteModel.php';
 require_once '../models/itemModel.php';
 require_once '../models/pedidoModel.php';
 
+
+$_SESSION['items'] = [];
+$_SESSION['totalDeItens'] = 0;
+
+    
 $mensagemDeErro = "";
 $pdo = Conexao::conecta();
 $endereco = $_POST['enderecoEscolha'];
