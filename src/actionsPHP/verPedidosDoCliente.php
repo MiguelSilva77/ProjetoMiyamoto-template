@@ -27,7 +27,9 @@ if($pedidos != null){
     Número: '.$endereco->getNumero().',
     Bairro: '.$endereco->getBairro().'<br>';
     
-    echo'Data: '.$pedido->getDataPedido().'<br>';
+    $data = new DateTime($pedido->getDataPedido());
+    echo 'Data: ' . $data->format('d/m/Y H:i') . '<br>';
+    
     echo'
         <table border="1" width="100%" cellpadding="10" style="border-collapse: collapse;" >
     <tr>

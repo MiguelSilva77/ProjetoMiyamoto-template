@@ -49,7 +49,7 @@ class PedidoModel{
 
     public function inserePedido(){
         $pdo = Conexao::conecta();
-        $sql = "INSERT INTO PEDIDOTESTE (idCliente, idEndereco)
+        $sql = "INSERT INTO PEDIDO (idCliente, idEndereco)
         VALUES (?, ?)"; 
         $stmt = $pdo->prepare($sql);
         $stmt->execute([

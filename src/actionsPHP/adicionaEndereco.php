@@ -84,7 +84,7 @@ $enderecoCadastrado = 0;
         try{
             $pdo->beginTransaction();
 
-            $endereco = new EnderecoModel($cep, $rua, $numero, $complemento, $bairro, $cidade, $estado);
+            $endereco = new EnderecoModel(null, $cep, $rua, $numero, $bairro, $cidade, $estado);
             $id_endereco =  $endereco->inserirEndereco()->getId();
 
             $clienteEndereco = new ClienteEnderecoModel($idCliente, $id_endereco);

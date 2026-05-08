@@ -20,15 +20,16 @@ $estado = $_POST['estado'];
 $pdo = Conexao::conecta();
 $clienteCadastrado = 0;
 $mensagemDeErro = '';
+$senhaHash = $senhaHash = password_hash($senha, PASSWORD_DEFAULT);
 
 try{
     $pdo->beginTransaction();
     
 
-    $cliente = new ClienteModel($id_cliente = null, $nome, $email, $telefone, $cpf, $senha);
+    $cliente = new ClienteModel($id_cliente = null, $nome, $email, $telefone, $cpf, $senhaHash);
     $id_cliente =  $cliente->inserirCliente()->getId();
 
-    $endereco = new EnderecoModel($cep, $rua, $numero, $complemento, $bairro, $cidade, $estado);
+    $endereco = new EnderecoModel(null,$cep, $rua, $numero, $complemento, $bairro, $cidade, $estado);
     $id_endereco =  $endereco->inserirEndereco()->getId();
 
     $clienteEndereco = new ClienteEnderecoModel($id_cliente, $id_endereco);

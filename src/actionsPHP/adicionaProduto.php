@@ -2,6 +2,13 @@
 session_start();
 require_once __DIR__.'/../conection/conexao.php';
 require_once __DIR__.'/../models/produtoModel.php';
+
+if(!isset($_SESSION['id'])){
+    session_destroy();
+    header('Location: index.php');
+    exit;
+}
+
 ?>
 
 <form action="" method="post">
@@ -10,7 +17,7 @@ require_once __DIR__.'/../models/produtoModel.php';
 <input type="text" name="nome" id="nome" maxlength="100">
 
 <label for="preco">Preço</label>
-<input type="number" name="preco" id="preco" step="0.01" min="0.01">
+<input type="number" name="preco" id="preco" step="0.01" min="0.01" max="999.99">
 
 <label for="descricao">Descrição</label>
 <input type="text" name="descricao" id="descricao" maxlength="200">

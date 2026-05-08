@@ -59,7 +59,7 @@ public function setPrecoUnitario($precoUnitario){
 
 public function inserirItem(){
     $pdo = Conexao::conecta();
-    $sql = "INSERT INTO ITEM_PEDIDO_TESTE (idPedido, idProduto, quantidade, preco_unitario)
+    $sql = "INSERT INTO ITEM_PEDIDO (idPedido, idProduto, quantidade, preco_unitario)
         VALUES (?, ?, ?, ?)";
     $stmt = $pdo->prepare($sql);
     $stmt->execute([
@@ -73,7 +73,7 @@ public function inserirItem(){
 public static function verPedidoPorId($id){
     $pdo = Conexao::conecta();
     $items = [];
-    $sql = "SELECT * FROM ITEM_PEDIDO_TESTE WHERE idPedido = $id";
+    $sql = "SELECT * FROM ITEM_PEDIDO WHERE idPedido = $id";
     $stmt = $pdo->query($sql);
     while($row = $stmt->fetch(PDO::FETCH_ASSOC)){
         $item = new ItemModel();

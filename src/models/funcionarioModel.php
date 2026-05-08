@@ -74,8 +74,8 @@ class funcionarioModel{
 
     public function inserirFuncionário(){
         $pdo = Conexao::conecta();
-        $sql = "INSERT INTO FUNCIONARIOTESTE (id_funcionario, nome, email, senha, dataCadastro, ultimaModificacao)
-            VALUES (null,?,?,?,null,null)";
+        $sql = "INSERT INTO FUNCIONARIO (id_funcionario, nome, email, senha)
+            VALUES (null,?,?,?)";
         $stmt = $pdo->prepare($sql);
         $stmt->execute([
             $this->nome,
@@ -86,21 +86,26 @@ class funcionarioModel{
 
     public static function logaFuncionario($email, $senha){
         $pdo = Conexao::conecta();
-        $sql = "SELECT * FROM FUNCIONARIOTESTE WHERE email = '$email' AND senha = '$senha'";
-        $stmt = $pdo->query($sql);
-        $quantidade = $stmt->rowCount();
-        if($quantidade == 1){
-            return $stmt->fetch(PDO::FETCH_ASSOC);
-        }else{
-            return'dados incorretos';
+        $sql = "SELECT * FROM FUNCIONARIO WHERE email = :email";
+        $stmt = $pdo->prepare($sql);
+        $stmt->bindValue(':email',$email);
+        $stmt->execute();
+        $funcionario = $stmt->fetch(PDO::FETCH_ASSOC);
+        if($funcionario){
+            if(password_verify($senha, $funcionario['senha'])){
+                return $funcionario;
+            }
+
         }
+
+        return false;
     }
 
     public static function verTodosOsFuncionários(){
         $pdo = Conexao::conecta();
         $funcionarios = [];
 
-        $sql = "SELECT * FROM FUNCIONARIOTESTE";
+        $sql = "SELECT * FROM FUNCIONARIO";
         $stmt = $pdo->query($sql);
         while($row = $stmt->fetch(PDO::FETCH_ASSOC)){
             $funcionario = new funcionarioModel();
@@ -118,13 +123,13 @@ class funcionarioModel{
 
     public static function deletaFuncionario($id){
         $pdo = Conexao::conecta();
-        $sql = "DELETE FROM FUNCIONARIOTESTE WHERE id_funcionario = '$id'";
+        $sql = "DELETE FROM FUNCIONARIO WHERE id_funcionario = '$id'";
         $stmt = $pdo->query($sql);
     }
 
     public function editaFuncionario($funcionario){
         $pdo = Conexao::conecta();
-        $sql = "UPDATE FUNCIONARIOTESTE SET
+        $sql = "UPDATE FUNCIONARIO SET
                 nome = :nome,
                 email = :email
                 WHERE id_funcionario = :id"; 
@@ -141,7 +146,7 @@ class funcionarioModel{
 
     public static function verFuncionarioPorId($id){
         $pdo = Conexao::conecta();
-        $sql = "SELECT * FROM FUNCIONARIOTESTE WHERE id_funcionario = $id";
+        $sql = "SELECT * FROM FUNCIONARIO WHERE id_funcionario = $id";
         $stmt = $pdo->query($sql);
         $funcionarios = null;
         while($row = $stmt->fetch(PDO::FETCH_ASSOC)){

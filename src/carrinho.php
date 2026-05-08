@@ -1,10 +1,11 @@
 <?php
 session_start();
-if(!isset($_SESSION['totalDeItens'])){
-    $_SESSION['totalDeItens'] = 0;
-}
 if(!isset($_SESSION['items'])){
     $_SESSION['items'] = [];
+}
+
+if(!isset($_SESSION['totalDeItens'])){
+    $_SESSION['totalDeItens'] = count($_SESSION['items']);;
 }
 
 
@@ -17,14 +18,23 @@ $compraFeita = false;
 if(isset($_POST['cliente']) && isset($_POST['produto'])){
     $idCliente = $_POST['cliente'];
     $idProduto = $_POST['produto'];
-    $_SESSION['totalDeItens'] ++ ;
     $_SESSION['items'][] = $idProduto;
     $_SESSION['idCliente'] = $idCliente;
+    $_SESSION['totalDeItens'] = count($_SESSION['items']);
 
 
     header("Location: " . $_SERVER['PHP_SELF']);
     exit;
 }
+
+if(isset($_POST['excluir'])){
+    $indice = $_POST['indice'];
+    unset($_SESSION['items'][$indice]);
+    $_SESSION['items'] = array_values($_SESSION['items']);
+    $_SESSION['totalDeItens'] = count($_SESSION['items']);  
+    header("Location: " . $_SERVER['PHP_SELF']);
+    }
+
 require_once 'conection/conexao.php';
 require_once 'models/produtoModel.php';
 require_once 'models/enderecoModel.php';
@@ -175,13 +185,14 @@ exit;
     </header>
 
     <?php
-            $todosOsProdutos = [];
+    $todosOsProdutos = [];
 
     if($_SESSION['totalDeItens'] > 0){
     foreach($_SESSION['items'] as $idProduto){
         $produto = ProdutoModel::verProdutoPorId($idProduto);
         $todosOsProdutos[] = $produto;
     }
+
 
     echo'<h1>itens no seu Carrinho</h1>';
    
@@ -191,7 +202,7 @@ exit;
             <th>Item</th><th>Descrição</th><th>Preço</th><th>Funções</th>
         </tr>
     ';
-    foreach($todosOsProdutos as $produto){
+    foreach($todosOsProdutos as $indice => $produto){
         $valorTotal += $produto->getPreco();
         echo'
             <tr>
@@ -199,7 +210,13 @@ exit;
             <td>'.$produto->getDescricao().'</td>
             <td>'.$produto->getPreco().'</td>
             <td>
-                <button>Excluir</button>
+                 <form method="POST">
+                    <input type="hidden" name="indice" value="'.$indice.'">
+
+                    <button type="submit" name="excluir">
+                        Excluir
+                    </button>
+                </form>
             </td>
             </tr>
         ';
@@ -208,8 +225,6 @@ exit;
     <h3>Valor Total das Compras: '.$valorTotal.'</h3>
     ';
 
-    echo $_SESSION['totalDeItens'];
-    var_dump($_SESSION['idCliente']);
     $idEnderecos = ClienteEnderecoModel::buscarEnderecoPorIdDoCliente($_SESSION['idCliente']);
     $enderecos = [];
     foreach($idEnderecos as $id){

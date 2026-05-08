@@ -98,7 +98,7 @@ class EnderecoModel{
         $pdo = Conexao::conecta();
 
         //mudar essa linha depois, apenas carater de teste de conexão
-        $sql = "INSERT INTO ENDERECOTESTE (cep, rua, numero, complemento, bairro, cidade, estado) 
+        $sql = "INSERT INTO ENDERECO (cep, rua, numero, complemento, bairro, cidade, estado) 
                 VALUES (?, ?, ?, ?, ?, ?, ?)";
         $stmt = $pdo->prepare($sql);
         $stmt->execute([$this->cep,
@@ -117,7 +117,7 @@ class EnderecoModel{
         $pdo = Conexao::conecta();
         $enderecos = [];
 
-        $sql = "SELECT * FROM ENDERECOTESTE";
+        $sql = "SELECT * FROM ENDERECO";
         $stmt = $pdo->query($sql);
         while($row = $stmt->fetch(PDO::FETCH_ASSOC)){
             $endereco = new EnderecoModel();
@@ -137,7 +137,7 @@ class EnderecoModel{
 
     public static function procurarEnderecoPorId($id){
          $pdo = Conexao::conecta();
-         $sql = "SELECT * FROM ENDERECOTESTE WHERE id_endereco = $id";
+         $sql = "SELECT * FROM ENDERECO WHERE id_endereco = $id";
          $stmt = $pdo->query($sql);
          while($row = $stmt->fetch(PDO::FETCH_ASSOC)){
             $endereco = new EnderecoModel();
@@ -158,7 +158,7 @@ class EnderecoModel{
 
     public function editaEndereco($endereco){
         $pdo = Conexao::conecta();
-        $sql = "UPDATE ENDERECOTESTE set
+        $sql = "UPDATE ENDERECO set
                 cep = :cep,
                 rua = :rua,
                 numero = :numero,

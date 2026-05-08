@@ -1,7 +1,6 @@
 <?php
 session_start();
 require_once 'models/funcionarioModel.php';
-
 $email = null;
 $senha = null;
 

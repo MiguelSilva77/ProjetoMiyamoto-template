@@ -49,7 +49,7 @@ class ProdutoModel{
 
     public function adicionaProduto(){
         $pdo = Conexao::conecta();
-        $sql = "INSERT INTO TESTEPRODUTO (id_produto, nome, preco, descricao)
+        $sql = "INSERT INTO PRODUTO (id_produto, nome, preco, descricao)
                 VALUES (null, ?, ?, ?)";
         $stmt = $pdo->prepare($sql);
         $stmt->execute([
@@ -64,7 +64,7 @@ class ProdutoModel{
     public static function verTodosOsProdutos(){
         $pdo = Conexao::conecta();
         $produtos = [];
-        $sql = "SELECT * FROM TESTEPRODUTO";
+        $sql = "SELECT * FROM PRODUTO";
         $stmt = $pdo->query($sql);
         while($rows = $stmt->fetch(PDO::FETCH_ASSOC)){
             $produto = new ProdutoModel();
@@ -81,14 +81,14 @@ class ProdutoModel{
 
     public static function deletaProduto($id){
         $pdo = Conexao::conecta();
-        $sql = "DELETE FROM TESTEPRODUTO WHERE id_produto = '$id' ";
+        $sql = "DELETE FROM PRODUTO WHERE id_produto = '$id' ";
         $stmt = $pdo->query($sql);
     }
 
     public static function verProdutoPorId($id){
         $pdo = Conexao::conecta();
         $produtos = null;
-        $sql = "SELECT * FROM TESTEPRODUTO WHERE id_produto = $id";
+        $sql = "SELECT * FROM PRODUTO WHERE id_produto = $id";
         $stmt = $pdo->query($sql);
         while($row = $stmt->fetch(PDO::FETCH_ASSOC)){
             $produto = new ProdutoModel();
@@ -101,6 +101,24 @@ class ProdutoModel{
             $produtos = $produto;
         }
         return $produtos;
+    }
+
+    public function editaProduto($produto){
+        $pdo = Conexao::conecta();
+        $sql = "UPDATE PRODUTO set
+                nome = :nome,
+                descricao = :descricao,
+                preco = :preco
+                WHERE id_produto = :id
+                ";
+        $stmt = $pdo->prepare($sql);
+        $stmt->bindValue(':nome',$produto->getNome());
+        $stmt->bindValue(':descricao',$produto->getDescricao());
+        $stmt->bindValue(':preco',$produto->getPreco());
+        $stmt->bindValue(':id',$produto->getId());
+
+        $stmt->execute();
+        return $produto->getId();
     }
 
 

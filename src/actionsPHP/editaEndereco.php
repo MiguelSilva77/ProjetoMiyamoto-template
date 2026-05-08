@@ -75,9 +75,11 @@
         $alteracaoRealizada = 1;
        }catch(RuntimeException $e){
         echo $e->getMessage();
+        $alteracaoRealizada = 2;
         $pdo->rollBack();
        }catch(Exception $e){
         echo $e->getMessage();
+        $alteracaoRealizada = 2;
         $pdo->rollBack();
        }
     }
@@ -88,8 +90,13 @@
             <a href="../paginaUsuario.php">
                 <button>Sair</button>
             </a>
-                
-           
+        </dialog>';
+    }else if($alteracaoRealizada == 2){
+        echo'<dialog>
+            <h1>Erro Dados não puderam ser atualizados</h1>
+            <a href="../paginaUsuario.php">
+                <button>Sair</button>
+            </a>
         </dialog>';
     }
 

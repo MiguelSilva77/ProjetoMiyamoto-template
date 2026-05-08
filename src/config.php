@@ -57,7 +57,10 @@ if(!isset($_SESSION['id'])){
                         <input type="hidden" name="idCliente" id="idCliente" value="'.$idVar.'">
                         <button type="submit">Ver Pedidos</button>
                     </form>
-                    <button>Ver Endereços</button>
+                    <form method="post" action="actionsPHP/verEnderecosDoCliente.php">
+                        <input type="hidden" name="idCliente" id="idCliente" value="'.$idVar.'">
+                        <button type="submit">Ver Endereços</button>
+                    </form>
                 </td>
                 </tr>
             ';
@@ -89,12 +92,13 @@ if(!isset($_SESSION['id'])){
                     <input type="hidden" name="id" id="id" value="'.$idVar.'"></input>
                     <button type="submit">Editar</button>
                 </form>
-            </td>
+            </td>..
         </tr>';
     }
     echo'</table>';
-    echo'<a href="actionsPHP/adicionaFuncionario.php">
-            <button>Adicionar Funcionário</button>
+    echo '
+        <a href="actionsPHP/adicionaFuncionario.php">
+            <button type="button">Adicionar Funcionário</button>
         </a>
     ';
 
@@ -117,16 +121,19 @@ echo"<br> <b>all products registered</b>";
                     <input type="hidden" name ="id" id="id" value="'.$idVar.'"></input>
                     <button type="submit" onClick="return confirm(\"Excluir?\")" >excluir</button>
                 </form>
-        <button>editar</button>
+        <form action="actionsPHP/editaProduto.php" method="post">
+                    <input type="hidden" name ="id" id="id" value="'.$idVar.'"></input>
+                    <button type="submit">Editar</button>
+                </form>
         
         </td>
         </tr>
         ';
    }
     echo'</table>';
-    echo' <a href="actionsPHP/adicionaProduto.php">
-    <button>Adicionar Produto</button>
-    </a>';
+    echo' <a href="/actionsPHP/adicionaProduto.php">
+            <button>Adicionar Produto</button>
+        </a>';
     ?>
 </div>
 

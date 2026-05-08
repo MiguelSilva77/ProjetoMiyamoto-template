@@ -83,7 +83,7 @@ require_once __DIR__.'/../models/pedidoModel.php';
             $pdo = Conexao::conecta();
 
             //mudar essa linha depois, apenas carater de teste de conexão
-            $sql = "INSERT INTO CLIENTETESTE (id_cliente ,nome, email, telefone, cpf, senha) 
+            $sql = "INSERT INTO CLIENTE (id_cliente ,nome, email, telefone, cpf, senha) 
                     VALUES (null,?, ?, ?, ?, ?)";
             $stmt = $pdo->prepare($sql);
             $stmt->execute([
@@ -102,7 +102,7 @@ require_once __DIR__.'/../models/pedidoModel.php';
                 $pdo = Conexao::conecta();
                 $clientes = [];
 
-                $sql = "SELECT * FROM CLIENTETESTE";
+                $sql = "SELECT * FROM CLIENTE";
                 $stmt = $pdo->query($sql);
                 while($row = $stmt->fetch(PDO::FETCH_ASSOC)){
                     $cliente = new ClienteModel();
@@ -121,7 +121,7 @@ require_once __DIR__.'/../models/pedidoModel.php';
 
             public static function verClientePorId($id){
                 $pdo = Conexao::conecta();
-                $sql = "SELECT * FROM CLIENTETESTE WHERE id_cliente = $id";
+                $sql = "SELECT * FROM CLIENTE WHERE id_cliente = $id";
                 $stmt = $pdo->query($sql);
                  while($row = $stmt->fetch(PDO::FETCH_ASSOC)){
                     $cliente = new ClienteModel();
@@ -143,7 +143,7 @@ require_once __DIR__.'/../models/pedidoModel.php';
             public function editarCliente($cliente){
                 $pdo = Conexao::conecta();
 
-                 $sql = "UPDATE CLIENTETESTE set
+                 $sql = "UPDATE CLIENTE set
                         nome = :nome,
                         email = :email,
                         telefone = :telefone,
@@ -165,14 +165,18 @@ require_once __DIR__.'/../models/pedidoModel.php';
 
             public static function logaCliente($email, $senha){
                 $pdo = Conexao::conecta();
-                $sql = "SELECT * FROM CLIENTETESTE WHERE email = '$email' AND senha = '$senha'";
-                $stmt = $pdo->query($sql);
-                $quantidade = $stmt->rowCount();
-                if($quantidade == 1){
-                    return $stmt->fetch(PDO::FETCH_ASSOC);
-                }else{
-                    return'dados incorretos';
+                $sql = "SELECT * FROM CLIENTE WHERE email = :email";
+                $stmt = $pdo->prepare($sql);
+                $stmt->bindValue(':email',$email);
+                $stmt->execute();
+                $cliente = $stmt->fetch(PDO::FETCH_ASSOC);
+                if($cliente){
+                    if(password_verify($senha, $cliente['senha'])){
+                return $cliente;
+                    }
+
                 }
+                return false;
             }
 
             public static function clienteJSON($cliente){
@@ -183,7 +187,7 @@ require_once __DIR__.'/../models/pedidoModel.php';
             public static function verPedidoPorCliente($id){
                 $pdo = Conexao::conecta();
                 $pedidos = [];
-                $sql = "SELECT * FROM PEDIDOTESTE WHERE idCliente = $id ORDER BY idPedido DESC";
+                $sql = "SELECT * FROM PEDIDO WHERE idCliente = $id ORDER BY idPedido DESC";
                 $stmt = $pdo->query($sql);
                 while($row = $stmt->fetch(PDO::FETCH_ASSOC)){
                    $pedido = new PedidoModel();

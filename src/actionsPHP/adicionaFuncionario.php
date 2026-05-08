@@ -4,19 +4,20 @@ require_once '../models/funcionarioModel.php';
 require_once '../conection/conexao.php';
 
 if(!isset($_SESSION['id'])){
-    session_destroy();
-    header('Location: index.php');
+    session_destroy();;
+    header('Location: /index.php');
     exit;
 }
 
 $nome = $_POST['nome'] ?? null;
 $email = $_POST['email'] ?? null; 
 $senha = $_POST['senha'] ?? null;
+$senhaHash = password_hash($senha, PASSWORD_DEFAULT);
 $mensagemDeErro = "";
 $funcionarioCadastraddo = 0;
 
 if($nome != null && $email != null && $senha != null){
-    $funcionario = new funcionarioModel(null, $nome, $email, $senha, null, null);
+    $funcionario = new funcionarioModel(null, $nome, $email, $senhaHash, null, null);
     $pdo = Conexao::conecta();
     try{
         $pdo->beginTransaction();

@@ -21,7 +21,7 @@ class ClienteEnderecoModel{
     public function inserirClienteEndereco(){
         $pdo = Conexao::conecta();
         //mudar essa linha depois, apenas carater de teste de conexão
-        $sql = "INSERT INTO CLIENTE_ENDERECO_TESTE (id_cliente, id_endereco) VALUES (?, ?)";
+        $sql = "INSERT INTO CLIENTE_ENDERECO (id_cliente, id_endereco) VALUES (?, ?)";
         $stmt = $pdo->prepare($sql);
         $stmt->execute([$this->id_cliente, 
                         $this->id_endereco]);
@@ -32,7 +32,7 @@ class ClienteEnderecoModel{
        public static function buscarEnderecoPorIdDoCliente($idCliente){
         $pdo = Conexao::conecta();
 
-        $sql = "SELECT id_endereco FROM CLIENTE_ENDERECO_TESTE WHERE id_cliente = :id";
+        $sql = "SELECT id_endereco FROM CLIENTE_ENDERECO  WHERE id_cliente = :id";
         $stmt = $pdo->prepare($sql);
 
         $stmt->bindValue(':id', $idCliente, PDO::PARAM_INT);
