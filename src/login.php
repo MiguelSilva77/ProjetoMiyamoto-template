@@ -9,6 +9,7 @@ $senha = null;
     
         $email = $_POST['email'];
         $senha = $_POST['senha'];
+        $mensagem = null;
 
         $cliente = ClienteModel::logaCliente($email, $senha);
         
@@ -17,19 +18,11 @@ $senha = null;
             $_SESSION['id_cliente'] = $cliente['id_cliente'];
             header("Location: paginaUsuario.php");
         }else{
-            echo'cliente não encontrado';
+            return  "Cliente não encontrado";
+
         }
            
-            
-      
-
-        
     }
-
-
-    
-
-
 
 ?>
 
@@ -126,7 +119,6 @@ $senha = null;
         </div>
         <input type="submit" name="continuar" id="continuar" class="btn" value="Continuar">
         </form>
-       
 
         <p>Ou escolha a opção</p>
 

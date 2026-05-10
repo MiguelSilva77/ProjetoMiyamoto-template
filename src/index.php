@@ -17,133 +17,13 @@ session_start();
     <link rel="stylesheet" href="styles/footer.css">
 
 
+
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js" integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <script src="https://unpkg.com/scrollreveal"></script>
     <title>Miyamoto</title>
 </head>
 <body>
-    <header>
-        <nav id="navbar">
-            <?php
-            //echo var_export($_SESSION);
-            if(isset($_SESSION['nome'])){
-                $nome = $_SESSION['nome'];
-                echo'<i class="fa-solid fa-burger" id="nav_logo"> Olá <br>'.explode(" ", $nome)[0].'</i>';
-            }else{
-                echo'<i class="fa-solid fa-burger" id="nav_logo"> Miyamoto <br>food</i>';
-            }
-            ?>
-
-            <ul id="nav_list">
-                <li class="nav-item active">
-                    <a href="#home">Início</a>
-                </li>
-                <li class="nav-item">
-                    <a href="#menu">Cardápio</a>
-                </li>
-                <li class="nav-item">
-                    <a href="#testimonials">Avaliações</a>
-                </li>
-                <li class="nav-item">
-                    <a href="carrinho.php">carrinho
-                        <i class="fa-solid fa-basket-shopping"></i>
-                        <?php
-                        if(isset($_SESSION['totalDeItens'])){
-                            echo $_SESSION['totalDeItens'];
-                        }
-                        ?>
-                    </a>
-                </li>
-            </ul>
-
-            <div style="display: flex;">
-            
-               <?php
-            if(isset($_SESSION['id_cliente'])){
-                echo'
-                <a href="paginaUsuario.php">
-                    <button class="btn-default-hea" >
-                    Login
-                    </button>
-                </a>
-                ';
-            }else{
-                echo'
-                <a href="login.php">
-                    <button class="btn-default-hea" >
-                    Login
-                    </button>
-                </a>
-                ';
-            }
-
-            if(isset($_SESSION['id'])){
-                echo'
-                    <a href="config.php">
-                        <button class="btn-default-hea" >
-                        Config
-                        </button>
-                    </a>
-                ';
-            }else{
-              echo'
-                    <a href="configuracoes.php">
-                        <button class="btn-default-hea" >
-                        Config
-                        </button>
-                    </a>
-                ';  
-            }
-            
-            ?>
-
-            
-
-            </div>
-           
-
-            <button id="mobile_btn">
-                <i class="fa-solid fa-bars"></i>
-            </button>
-        </nav>
-
-        <div id="mobile_menu">
-            <ul id="mobile_nav_list">
-                <li class="nav-item">
-                    <a href="#home">Início</a>
-                </li>
-                <li class="nav-item">
-                    <a href="#menu">Cardápio</a>
-                </li>
-                <li class="nav-item">
-                    <a href="#testimonials">Avaliações</a>
-                </li>
-            </ul>
-
-            <?php
-            if(isset($_SESSION['id_cliente'])){
-                echo'
-                <a href="paginaUsuario.php">
-                    <button class="btn-default" >
-                    Login
-                    </button>
-                </a>
-                ';
-            }else{
-                echo'
-                <a href="login.php">
-                    <button class="btn-default" >
-                    Login
-                    </button>
-                </a>
-                ';
-            }
-            
-            ?>
-
-           
-        </div>
-    </header>
+    <?php require_once 'header.php'; ?>
 
     <main id="content">
         <section id="home">
@@ -410,29 +290,8 @@ session_start();
         </section>
     </main>
 
-    <footer>
-        <img src="images/wave.svg" alt="">
+    <?php require_once 'footer.php'; ?>
 
-        <div id="footer_items">
-            <span id="copyright">
-                &copy 2026 miyamoto company
-            </span>
-
-            <div class="social-media-buttons">
-                <a href="">
-                    <i class="fa-brands fa-whatsapp"></i>
-                </a>
-
-                <a href="">
-                    <i class="fa-brands fa-instagram"></i>
-                </a>
-
-                <a href="">
-                    <i class="fa-brands fa-facebook"></i>
-                </a>
-            </div>
-        </div>
-    </footer>
     <script src="javascript/script.js"></script>
 </body>
 </html>

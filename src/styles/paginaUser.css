@@ -1,0 +1,30 @@
+body{
+    padding-left: 2%;
+    padding-right: 2%;
+}
+
+body button{
+    border: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: var(--color-primary-5);
+    border-radius: 12px;
+    padding: 10px 14px;
+    font-weight: 600;
+    box-shadow: 0px 0px 10px 2px rgba(0, 0, 0, 0.1);
+    cursor: pointer;
+    transition: background-color .3s ease;
+    decoration: none;
+}
+
+body th{
+    background-color: var(--color-primary-3);
+    text-align: center;
+}
+
+body td{
+    background-color: var(--color-primary-2);
+    text-align: center;
+
+}

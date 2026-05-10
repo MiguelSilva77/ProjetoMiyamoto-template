@@ -17,7 +17,7 @@
 
     $pdo = Conexao::conecta();
 
-    $ruaAlterada = $_POST['rua'];
+    $ruaAlterada = $_POST['rua'] ?? null;
     $alteracaoRealizada = 0;
     $mensagemDeErro = '';
 

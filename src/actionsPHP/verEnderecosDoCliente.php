@@ -34,7 +34,7 @@ foreach($idEnderecos as $id){
 
 echo'<h1>Endereços de '.$cliente->getNome().'</h1>';
    echo'
-        <form method="post" action="actionsPHP/adicionaPedido.php">
+        <form method="post">
             <table border="1" width="100%" cellpadding="10" style="border-collapse: collapse;">
                 <tr>
                     <th>Cep</th><th>logradouro</th><th>Número</th><th>Complemento</th><th>Bairro</th><th>Cidade</th><th>Estado</th>

@@ -1,4 +1,16 @@
-<?php
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../styles/styles.css">
+    <link rel="stylesheet" href="../styles/modal.css">
+    <title>Cadastra Cliente</title>
+</head>
+<body>
+    <?php
 require_once '../models/clienteEnderecoModel.php';
 require_once '../models/clienteModel.php';
 require_once '../models/enderecoModel.php';
@@ -29,7 +41,7 @@ try{
     $cliente = new ClienteModel($id_cliente = null, $nome, $email, $telefone, $cpf, $senhaHash);
     $id_cliente =  $cliente->inserirCliente()->getId();
 
-    $endereco = new EnderecoModel(null,$cep, $rua, $numero, $complemento, $bairro, $cidade, $estado);
+    $endereco = new EnderecoModel(null,$cep, $rua, $numero, $bairro, $cidade, $estado, $complemento);
     $id_endereco =  $endereco->inserirEndereco()->getId();
 
     $clienteEndereco = new ClienteEnderecoModel($id_cliente, $id_endereco);
@@ -91,36 +103,6 @@ if($clienteCadastrado == 1){
 
 
 ?>
-
-
-
-<style>dialog {
-    border: none;
-    border-radius: 15px;
-    padding: 30px;
-    width: 300px;
-    box-shadow: 0 10px 30px rgba(0,0,0,0.3);
-}
-
-dialog::backdrop {
-    background: rgba(0, 0, 0, 0.6);
-    backdrop-filter: blur(3px); 
-}
-
-dialog button {
-    background-color: #28a745;
-    color: white;
-    border: none;
-    padding: 10px 20px;
-    border-radius: 5px;
-    cursor: pointer;
-    margin-top: 15px;
-}</style>
-
-<Script>
-    const mensagem = document.querySelector("dialog");
-    mensagem.showModal();
-</Script>
-
-
-
+    <script src="../javascript/scriptModal.js"></script>
+</body>
+</html>
