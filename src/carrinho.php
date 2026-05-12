@@ -62,12 +62,15 @@ exit;
     <link rel="stylesheet" href="styles/menu.css">
     <link rel="stylesheet" href="styles/testimonials.css">
     <link rel="stylesheet" href="styles/footer.css">
+    <link rel="stylesheet" href="styles/paginaUser.css">
+
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js" integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <script src="https://unpkg.com/scrollreveal"></script>
     <title>Carrinho</title>
 </head>
 <body>
+    <main>
      <header>
         <nav id="navbar">
             <?php
@@ -254,9 +257,7 @@ exit;
             <td>'.$endereco->getRua().'</td>
             <td>'.$endereco->getNumero().'</td>
             <td>'.$endereco->getBairro().'</td>
-            <td>
-                <button>Excluir</button>
-            </td>
+            <td>'.$endereco->getComplemento().'</td>
             </tr>
         ';
     }
@@ -271,6 +272,7 @@ exit;
     
     
     ?>
+    </main>
 
     <footer>
         <img src="images/wave.svg" alt="">

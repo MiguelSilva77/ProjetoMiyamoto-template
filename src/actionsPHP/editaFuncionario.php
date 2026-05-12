@@ -23,29 +23,41 @@ $mensagemDeErro = "";
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="../styles/styles.css">
+    <link rel="stylesheet" href="../styles/header2.css">
+    <link rel="stylesheet" href="../styles/editaCliente.css">
+    <link rel="stylesheet" href="../styles/footer.css">
     <link rel="stylesheet" href="../styles/modal.css">
     <title>Edita Funncionário</title>
 </head>
 <body>
+    <main>
 
 <?php
+require_once '../header.php';
 if($nomeAlterado == null){
     $funcionario = funcionarioModel::verFuncionarioPorId($idFuncionario);
     echo'
-    <h1>Altere os Dados que deseja atualizar</h1>
-    <form action="" method="post" onsubmit="return confirm(\'Atualizar Dados?\')>
-        <label for="nome">nome:</label>
-        <input type="text" id="nomeAlterado" name="nomeAlterado" value="'.$funcionario->getNome().'" required>
+    <div class="containerGrande">
+        <div class="container">
+            <form action="" method="post" onsubmit="return confirm(\'Atualizar Dados?\')">
+                <label><h1>Altere os Dados que deseja atualizar</h1></label>
+                <label for="nome">nome:</label>
+                <input type="text" id="nomeAlterado" name="nomeAlterado" value="'.$funcionario->getNome().'" required>
 
-        <label for="email">email:</label>
-        <input type="email" id="emailAlterado" name="emailAlterado" value="'.$funcionario->getEmail().'"required>
+               
+                <label for="email">email:</label>
+                <input type="email" id="emailAlterado" name="emailAlterado" value="'.$funcionario->getEmail().'"required>
 
-        <input type="hidden" name="idAlterado" value="'.$funcionario->getId().'">
-        <input type="hidden" name="dataAltaerada" value="'.$funcionario->getDataCadastro().'">
-        <input type="hidden" name="modficacaoAlterada" value="'.$funcionario->getUltimaModificacao().'">
+                <input type="hidden" name="idAlterado" value="'.$funcionario->getId().'">
+                <input type="hidden" name="dataAltaerada" value="'.$funcionario->getDataCadastro().'">
+                <input type="hidden" name="modficacaoAlterada" value="'.$funcionario->getUltimaModificacao().'">
 
-        <button type="submit" onClick="return confirm(\"Atualizar Dados?\")">Atualizar</button>
-    </form>
+                <button type="submit" class="btn-cadastrar" onClick="return confirm(\"Atualizar Dados?\")">Atualizar</button>
+            </form>
+        </div>
+    </div>
 ';
 }else{
 
@@ -109,6 +121,11 @@ if($nomeAlterado == null){
 
 
 ?>
+<a href="../config.php">
+    <button type="button" class="btn-default">Voltar</button>
+</a>
     <script src="../javascript/scriptModal.js"></script>
+</main>
+    <?php require_once '../footer.php'; ?>
 </body>
 </html>

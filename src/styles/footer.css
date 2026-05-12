@@ -1,13 +1,47 @@
 /*criador Pedro Vidal*/
 
+html {
+    height: 100%;
+}
+
+body {
+    min-height: 100vh; 
+    margin: 0;
+    display: flex !important; 
+    flex-direction: column !important;
+}
+
+main {
+    flex: 1 0 auto; 
+}
+
+
+footer {
+    flex-shrink: 0; 
+    background-color: var(--color-primary-2);
+}
+
 footer {
     background-color: var(--color-primary-2);
 }
 
+footer img {
+    display: block;
+    width: 100%;
+}
+
+.footer-wave {
+    width: 100%;
+    display: block; 
+    margin-bottom: -1px; 
+    line-height: 0;
+}
+
 #footer_items {
+    background-color: var(--color-primary-2); 
     display: flex;
     justify-content: space-between;
-    padding: 0px 8% 24px 8%;
+    padding: 20px 8% 40px 8%; 
     align-items: center;
 }
 

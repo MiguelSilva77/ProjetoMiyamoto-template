@@ -1,5 +1,6 @@
- <footer>
-        <img src="images/wave.svg" alt="">
+
+    <footer>
+        <img src="images/wave.svg" class="footer-wave" alt="">
 
         <div id="footer_items">
             <span id="copyright">
@@ -21,3 +22,7 @@
             </div>
         </div>
     </footer>
+    
+ 
+ 
+ 

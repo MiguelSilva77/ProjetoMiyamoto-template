@@ -1,10 +1,37 @@
 <?php
+    session_start();
     require_once '../models/clienteEnderecoModel.php';
     require_once '../models/clienteModel.php';
     require_once '../models/enderecoModel.php';
     require_once '../conection/conexao.php';
 
-    
+    if($_SESSION['id_cliente']==null){
+        header("Location: login.php");
+    }
+
+    ?>
+
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="../styles/styles.css">
+    <link rel="stylesheet" href="../styles/header2.css">
+    <link rel="stylesheet" href="../styles/modal.css">
+    <link rel="stylesheet" href="../styles/editaCliente.css">
+    <link rel="stylesheet" href="../styles/footer.css">
+
+
+
+    <title>Edita Cliente</title>
+</head>
+<body>
+    <main class="dadosPHP">
+    <?php require_once '../header.php'?>
+
+    <?php
     $pdo = Conexao::conecta();
     @$nomeAlterado = $_POST['nome'];
     $alteracaoRealizada = 0;
@@ -14,27 +41,31 @@
         $dados = $_POST['dados'];
         $cliente = ClienteModel::verClientePorId($dados);
 
-        echo '<h1>Altere os dados que deseja atualizar</h1>
-        <form action="" method="POST">
-            <input style="display: none;" type="text" name="id" id="id" value="'.$cliente->getId().'" >
-            <input style="display: none;" type="text" name="senha" id="senha" value="'.$cliente->getSenha().'" >
+        echo '        
+        <div class="containerGrande">
+            <div class="container">
+                <form action="" method="POST">
+                    <input style="display: none;" type="text" name="id" id="id" value="'.$cliente->getId().'" >
+                    <input style="display: none;" type="text" name="senha" id="senha" value="'.$cliente->getSenha().'" >
 
+                    <label><h1>Altere os dados que deseja atualizar</h1></label>
+                    <label for="nome">Nome:</label>
+                    <input type="text" id="nome" name="nome" placeholder="Nome" value="'.$cliente->getNome().'" required>
 
-            <label for="nome">Nome:</label>
-            <input type="text" id="nome" name="nome" placeholder="Nome" value="'.$cliente->getNome().'" required>
+          	        <label for="email">Email:</label>
+                    <input type="email" id="email" name="email" placeholder="seu@email.com" value="'.$cliente->getEmail().'" required>
 
-          	<label for="email">Email:</label>
-            <input type="email" id="email" name="email" placeholder="seu@email.com" value="'.$cliente->getEmail().'" required>
+                    <label for="telefone">Telefone:</label>
+                    <input type="text" id="telefone" name="telefone" maxlength="14" placeholder="(99)99999-9999" value="'.$cliente->getTelefone().'" required>
 
-            <label for="telefone">Telefone:</label>
-            <input type="text" id="telefone" name="telefone" maxlength="14" placeholder="(99)99999-9999" value="'.$cliente->getTelefone().'" required>
-
-            <label for="telefone">CPF:</label>
-            <input type="text" id="cpf" name="cpf" maxlength="14" placeholder="999.999.999-99" value="'.$cliente->getCpf().'" required>
+                    <label for="telefone">CPF:</label>
+                    <input type="text" id="cpf" name="cpf" maxlength="14" placeholder="999.999.999-99" value="'.$cliente->getCpf().'" required>
 
             
-            <button type="submit" class="btn-cadastrar">Atualizar</button>
-        </form>';
+                    <button type="submit" class="btn-cadastrar">Atualizar</button>  
+               </form>
+            </div>
+        </div>';
 
     }else{
         $emailAlterado = $_POST['email'];
@@ -100,42 +131,13 @@
             </a>
                 <button onClick="window.history.back()">Voltar</button>
         </dialog>';
-   }
-        
-
-       
-
-   
-    
-    
+   }  
 ?>
+</main>
 
-<!-- colocar esse script e style em página separada depois -->
-<style>dialog {
-    border: none;
-    border-radius: 15px;
-    padding: 30px;
-    width: 300px;
-    box-shadow: 0 10px 30px rgba(0,0,0,0.3);
-}
+    <?php require_once '../footer.php'?>
+    <script src="../javascript/scriptModal.js"></script>
+    <script src="../javascript/scriptCad.js" defer></script>
+</body>
+</html>
 
-dialog::backdrop {
-    background: rgba(0, 0, 0, 0.6);
-    backdrop-filter: blur(3px); 
-}
-
-dialog button {
-    background-color: #28a745;
-    color: white;
-    border: none;
-    padding: 10px 20px;
-    border-radius: 5px;
-    cursor: pointer;
-    margin-top: 15px;
-}</style>
-
-
-<Script>
-    const mensagem = document.querySelector("dialog");
-    mensagem.showModal();
-</Script>

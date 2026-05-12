@@ -1,19 +1,37 @@
+<?php
+session_start();
+
+if($_SESSION['id_cliente']==null){
+    header("Location: login.php");
+}
+
+?>
+
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="../styles/styles.css">
+    <link rel="stylesheet" href="../styles/header2.css">
+    <link rel="stylesheet" href="../styles/modal.css">
+    <link rel="stylesheet" href="../styles/editaEndereco.css">
+    <link rel="stylesheet" href="../styles/footer.css">
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.16/jquery.mask.min.js"></script> 
     <script src="../javascript/viaCEP.js" defer></script>
-    <title>Document</title>
+    <title>Edita Endereço</title>
 </head>
+
 <body>
+    <main>
     <?php
     require_once '../models/clienteEnderecoModel.php';
     require_once '../models/clienteModel.php';
     require_once '../models/enderecoModel.php';
     require_once '../conection/conexao.php';
+    require_once '../header.php';
 
     $pdo = Conexao::conecta();
 
@@ -25,9 +43,12 @@
         $dados = $_POST['dados'];
         $endereco = EnderecoModel::procurarEnderecoPorId($dados);
 
-        echo'<h1>Altere os dados que deseja atualizar</h1>
+        echo'
+        <div class="containerGrande">
+            <div class="container">
         <form action="" method="post">
             <input style="display: none;" type="text" name="id" id="id" value="'.$endereco->getId().'" >
+            <label><h1>Altere os dados que deseja atualizar</h1></label>
             <label for="cep">CEP:</label>
                 <a href="https://buscacepinter.correios.com.br/app/endereco/index.php" target="_blank" class="nCEP">
                      Não sei meu cep
@@ -53,7 +74,9 @@
             <input type="text" id="estado" name="estado" value="'.$endereco->getEstado().'" required>
 
             <button type="submit" class="btn-cadastrar">Cadastrar</button>
-        </form>';
+        </form>
+    </div>
+</div>';
     }else{
         $id = $_POST['id'];
         $cepAlterado = $_POST['cep'];
@@ -104,35 +127,10 @@
 
 ?>
 
-    
+</main>
+<?php require_once '../footer.php'; ?>
+<script src="../javascript/scriptModal.js"></script>
+<script src="../javascript/viaCEP.js" defer></script> 
+<script src="../javascript/scriptCad.js" defer></script>
 </body>
-<style>dialog {
-    border: none;
-    border-radius: 15px;
-    padding: 30px;
-    width: 300px;
-    box-shadow: 0 10px 30px rgba(0,0,0,0.3);
-}
-
-dialog::backdrop {
-    background: rgba(0, 0, 0, 0.6);
-    backdrop-filter: blur(3px); 
-}
-
-dialog button {
-    background-color: #28a745;
-    color: white;
-    border: none;
-    padding: 10px 20px;
-    border-radius: 5px;
-    cursor: pointer;
-    margin-top: 15px;
-}</style>
-
-
-<Script>
-    const mensagem = document.querySelector("dialog");
-    mensagem.showModal();
-</Script>
 </html>
-

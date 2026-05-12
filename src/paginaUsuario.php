@@ -16,9 +16,6 @@ require_once 'models/itemModel.php';
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link rel="stylesheet" href="styles/styles.css">
     <link rel="stylesheet" href="styles/header2.css">
-    <link rel="stylesheet" href="styles/home.css">
-    <link rel="stylesheet" href="styles/menu.css">
-    <link rel="stylesheet" href="styles/testimonials.css">
     <link rel="stylesheet" href="styles/footer.css">
     <link rel="stylesheet" href="styles/paginaUser.css">
     <title>Página de Usuário</title>
@@ -160,15 +157,20 @@ if($pedidos != null){
 }
 
 ?>
+
+<div class="botoes">
     <a href="index.php">
-    <button>Página Inicial</button>
-</a>
-  <a href="logout.php">
-    <button>
-        Deslogar
-        <i class="fa-solid fa-right-from-bracket"></i>    
-    </button>
+        <button>Página Inicial</button>
     </a>
+    <a href="logout.php">
+        <button>
+            Deslogar
+            <i class="fa-solid fa-right-from-bracket"></i>    
+        </button>
+    </a>
+</div>
+
+    
 
     
 </body>

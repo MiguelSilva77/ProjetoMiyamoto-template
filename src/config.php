@@ -9,18 +9,16 @@ if(!isset($_SESSION['id'])){
 ?>
 
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-br">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="styles/styles.css">
     <link rel="stylesheet" href="styles/header2.css">
-    <link rel="stylesheet" href="styles/home.css">
-    <link rel="stylesheet" href="styles/menu.css">
-    <link rel="stylesheet" href="styles/testimonials.css">
     <link rel="stylesheet" href="styles/footer.css">
     <link rel="stylesheet" href="styles/login.css">
-    <link rel="stylesheet" href="styles/styles.css">
+    <link rel="stylesheet" href="styles/paginaUser.css">
     <title>Configurações</title>
 </head>
 <body>
@@ -32,11 +30,12 @@ if(!isset($_SESSION['id'])){
     require_once  __DIR__.'/models/enderecoModel.php';
     require_once  __DIR__.'/models/funcionarioModel.php';
     require_once  __DIR__.'/models/produtoModel.php';
+    require_once 'header.php';
 
     $nome = $_SESSION['nome'] ?? null;
     echo"<h2>Olá $nome</h2>";
 
-    echo"<br> <b>All clients Registered </b><br>";
+    echo"<br> <b>Todos os Clientes Cadastrados </b><br>";
 
     $todosOsCliente = ClienteModel::verTodosOsClientes();
     echo '<table border="1" width="100%" cellpadding="10" style="border-collapse: collapse;">
@@ -67,7 +66,7 @@ if(!isset($_SESSION['id'])){
         }; 
         echo'</table>';
 
-     echo"<br> <b>All emplyed Registered </b><br>";
+     echo"<br> <b>Todos os Funcionários Cadastrados </b><br>";
 
    $todosOsFuncionarios = funcionarioModel::verTodosOsFuncionários();
    echo'
@@ -92,7 +91,7 @@ if(!isset($_SESSION['id'])){
                     <input type="hidden" name="id" id="id" value="'.$idVar.'"></input>
                     <button type="submit">Editar</button>
                 </form>
-            </td>..
+            </td>
         </tr>';
     }
     echo'</table>';
@@ -103,7 +102,7 @@ if(!isset($_SESSION['id'])){
     ';
 
 $todosOsprodutos = ProdutoModel::verTodosOsProdutos();
-echo"<br> <b>all products registered</b>";
+echo"<br> <b>Todos os Produtos Cadastrados </b><br>";
      echo'
    <table <table border="1" width="100%" cellpadding="10" style="border-collapse: collapse;" >
     <tr>
@@ -144,7 +143,7 @@ echo"<br> <b>all products registered</b>";
 
     <a href="logout.php">
     <button>Sair</button>
-    </a>;
+    </a>
 
     <footer>
         <img src="images/wave.svg" alt="">

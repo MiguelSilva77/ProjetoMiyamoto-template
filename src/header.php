@@ -21,7 +21,7 @@
                     <a href="/index.php#testimonials">Avaliações</a>
                 </li>
                 <li class="nav-item">
-                    <a href="carrinho.php">carrinho
+                    <a href="/carrinho.php">carrinho
                         <i class="fa-solid fa-basket-shopping"></i>
                         <?php
                         if(isset($_SESSION['totalDeItens'])){
@@ -37,7 +37,7 @@
                <?php
             if(isset($_SESSION['id_cliente'])){
                 echo'
-                <a href="paginaUsuario.php">
+                <a href="/paginaUsuario.php">
                     <button class="btn-default-hea">
                     User 
                     <i class="fa-solid fa-user"></i>
@@ -46,7 +46,7 @@
                 ';
             }else{
                 echo'
-                <a href="login.php">
+                <a href="/login.php">
                     <button class="btn-default-hea" >
                     Login
                     </button>
@@ -56,7 +56,7 @@
 
             if(isset($_SESSION['id'])){
                 echo'
-                    <a href="config.php">
+                    <a href="/config.php">
                         <button class="btn-default-hea" >
                         Config
                         </button>
@@ -64,7 +64,7 @@
                 ';
             }else{
               echo'
-                    <a href="configuracoes.php">
+                    <a href="/configuracoes.php">
                         <button class="btn-default-hea" >
                         Config
                         </button>

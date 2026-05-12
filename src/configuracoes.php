@@ -103,9 +103,6 @@ if(isset($_POST['email'])&&isset($_POST['senha'])){
         <img src="images/logo.png" class="img" >
 
         <form action="" method="post">
-            <div class="input-group">
-                <label for="nome">Informe o seu nome</label>
-                <input type="text" id="nome" name="nome" placeholder="Informe o seu nome">
             
             <div class="input-group">
                 <label for="email">Informe o seu e-mail corporativo</label>
