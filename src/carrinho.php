@@ -45,7 +45,9 @@ require_once 'models/pedidoModel.php';
 
 if(!isset($_SESSION['id_cliente'])|| $_SESSION['id_cliente'] == null){
    echo "<script>alert('Login não realizado, entre com seu usuário e senha para continuar a operação'); window.location.href='../login.php';</script>";
-exit;
+   $_SESSION['items'] = [];
+   $_SESSION['totalDeItens'] = 0;
+   exit;
 
 }
 ?>
